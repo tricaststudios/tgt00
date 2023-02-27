@@ -1,0 +1,63 @@
+import InputError from '@/Components/Form/InputError';
+import InputLabel from '@/Components/Form/InputLabel';
+import ButtonPrimary from '@/Components/Common/ButtonPrimary';
+import TextInput from '@/Components/Form/TextInput';
+import GuestLayout from '@/Layouts/GuestLayout';
+import { Head, useForm } from '@inertiajs/react';
+import { useEffect } from 'react';
+
+export default function ConfirmPassword() {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        password: '',
+    });
+
+    useEffect(() => {
+        return () => {
+            reset('password');
+        };
+    }, []);
+
+    const onHandleChange = event => {
+        setData(event.target.name, event.target.value);
+    };
+
+    const submit = e => {
+        e.preventDefault();
+
+        post(route('password.confirm'));
+    };
+
+    return (
+        <GuestLayout>
+            <Head title="Confirm Password" />
+
+            <div className="mb-4 text-sm text-neutral-600 dark:text-neutral-400">
+                This is a secure area of the application. Please confirm your password before continuing.
+            </div>
+
+            <form onSubmit={submit}>
+                <div className="mt-4">
+                    <InputLabel forInput="password" value="Password" />
+
+                    <TextInput
+                        id="password"
+                        type="password"
+                        name="password"
+                        value={data.password}
+                        className="mt-1 block w-full"
+                        isFocused={true}
+                        handleChange={onHandleChange}
+                    />
+
+                    <InputError message={errors.password} className="mt-2" />
+                </div>
+
+                <div className="mt-4 flex items-center justify-end">
+                    <ButtonPrimary className="ml-4" processing={processing}>
+                        Confirm
+                    </ButtonPrimary>
+                </div>
+            </form>
+        </GuestLayout>
+    );
+}
