@@ -125,14 +125,17 @@ export default function Register() {
                     Register
                 </ButtonPrimary>
             </form>
-
-            <div className="mt-10 flex justify-center">
-                <Link
-                    href={route('login')}
-                    className="rounded-md text-sm text-neutral-600 underline hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 dark:text-neutral-400 dark:hover:text-neutral-100 dark:focus:ring-offset-neutral-800"
-                >
-                    Already registered?
-                </Link>
+            <div className="mt-10">
+                <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-neutral-300" />
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                        <span className="bg-white px-2 dark:bg-neutral-800 dark:text-neutral-300">
+                            <Link href={route('login')}>Already registered?</Link>
+                        </span>
+                    </div>
+                </div>
             </div>
         </GuestLayout>
     );

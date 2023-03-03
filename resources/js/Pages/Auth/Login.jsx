@@ -92,6 +92,18 @@ export default function Login({ status, canResetPassword }) {
                     </ButtonPrimary>
                 </div>
             </form>
+            <div className="mt-10">
+                <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-neutral-300" />
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                        <span className="bg-white px-2 dark:bg-neutral-800 dark:text-neutral-300">
+                            <Link href={route('register')}>Or click here to register</Link>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </GuestLayout>
     );
 }
