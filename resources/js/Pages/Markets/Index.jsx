@@ -1,15 +1,24 @@
 import P from '@/Components/AuthenticatedLayout/P';
 import Section from '@/Components/AuthenticatedLayout/Section';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { getPriceTicker } from '@/Lib/binance';
 import { formatUSD } from '@/Lib/wallet';
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export default function Markets({ auth, collection }) {
     const url = usePage().props.env.api_url;
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            router.reload({ only: ['collection'], progress: false, preserveState: true, preserveScroll: true });
+        }, 5000);
+
+        return () => {
+            clearTimeout(timer);
+        };
+    });
 
     return (
         <AuthenticatedLayout auth={auth}>
