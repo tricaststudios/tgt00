@@ -3,3 +3,7 @@ export function formatUSDT(amount) {
         .toFixed(4)
         .toString();
 }
+
+export function formatUSD(amount) {
+    return parseFloat(amount).toFixed(2).toString();
+}

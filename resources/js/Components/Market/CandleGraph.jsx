@@ -1,6 +1,8 @@
 import { getKlines, intervals } from '@/Lib/binance';
+import { formatUSD } from '@/Lib/wallet';
 import { RadioGroup } from '@headlessui/react';
 import { CheckCircleIcon } from '@heroicons/react/20/solid';
+import { usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import P from '../AuthenticatedLayout/P';
@@ -14,6 +16,8 @@ const CandleGraph = ({ market }) => {
     const [series, setSeries] = useState([]);
     const [selectedInterval, setSelectedInterval] = useState(intervals[0].value);
     const [datas, setDatas] = useState([]);
+    const url = usePage().props.env.api_url;
+
     function fetchData() {
         setDatas([
             { name: 'Current Price', value: series[0].data[series[0].data.length - 1].y[1] },
@@ -22,19 +26,20 @@ const CandleGraph = ({ market }) => {
             { name: 'High', value: series[0].data[series[0].data.length - 1].y[1] },
         ]);
     }
+
     useEffect(() => {
         if (!series) {
-            getKlines(market, selectedInterval).then(data => {
+            getKlines(url, market, selectedInterval).then(data => {
                 setSeries(data);
                 fetchData();
             });
         } else {
             const timer = setTimeout(() => {
-                getKlines(market, selectedInterval).then(data => {
+                getKlines(url, market, selectedInterval).then(data => {
                     setSeries(data);
                     fetchData();
                 });
-            }, 2000);
+            }, 5000);
 
             return () => {
                 clearTimeout(timer);
@@ -47,7 +52,7 @@ const CandleGraph = ({ market }) => {
                 {datas.map((item, index) => (
                     <Section key={index}>
                         <P>
-                            {item.name}: {item.value}
+                            {item.name}: $ {formatUSD(item.value)}
                         </P>
                     </Section>
                 ))}
@@ -67,7 +72,7 @@ const CandleGraph = ({ market }) => {
                                 classNames(
                                     checked ? 'border-transparent' : 'border-neutral-100',
                                     active ? 'border-neutral-500 ring-2 ring-neutral-500' : '',
-                                    'relative flex cursor-pointer rounded-lg border dark:bg-neutral-800 p-4 shadow-sm focus:outline-none',
+                                    'relative flex cursor-pointer rounded-lg border p-4 shadow-sm focus:outline-none dark:bg-neutral-800',
                                 )
                             }
                         >

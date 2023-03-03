@@ -1,19 +1,15 @@
 import P from '@/Components/AuthenticatedLayout/P';
 import Section from '@/Components/AuthenticatedLayout/Section';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { getPriceTicker } from '@/Lib/binance';
+import { formatUSD } from '@/Lib/wallet';
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 
 export default function Markets({ auth, collection }) {
-    const [markets, setMarkets] = useState([]);
-
-    useEffect(() => {
-        // collection.forEach(market => {
-        //     getPriceTicker('BTCUSDT').then(response => console.log(response));
-        // });
-    }, [collection]);
+    const url = usePage().props.env.api_url;
 
     return (
         <AuthenticatedLayout auth={auth}>
@@ -29,21 +25,21 @@ export default function Markets({ auth, collection }) {
                                 <p className="truncate text-sm font-medium uppercase text-neutral-500">{item.symbol}/USDT</p>
                             </dt>
                             <dd className="flex flex-1 items-baseline">
-                                <P className="text-2xl font-semibold text-neutral-900">{item.stat}</P>
+                                <P className="text-2xl font-semibold text-neutral-900">${formatUSD(item.stats.lastPrice)}</P>
                                 <P
                                     className={clsx(
-                                        true === 'increase' ? '!text-green-600' : '!text-red-600',
+                                        item.stats.priceChangePercent > 0 ? '!text-green-600' : '!text-red-600',
                                         'ml-2 flex items-baseline text-sm font-semibold',
                                     )}
                                 >
-                                    {true === 'increase' ? (
+                                    {item.stats.priceChangePercent > 0 ? (
                                         <ArrowUpIcon className="h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
                                     ) : (
                                         <ArrowDownIcon className="h-5 w-5 flex-shrink-0 self-center text-red-500" aria-hidden="true" />
                                     )}
 
-                                    <span className="sr-only"> {true === 'increase' ? 'Increased' : 'Decreased'} by </span>
-                                    {item.is_active}
+                                    <span className="sr-only"> {item.stats.priceChangePercent > 0 ? 'Increased' : 'Decreased'} by </span>
+                                    {item.stats.priceChangePercent}
                                 </P>
                             </dd>
                         </Section>

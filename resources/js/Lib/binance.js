@@ -7,28 +7,24 @@ export const intervals = [
     { name: '1 Month', value: '1M' },
 ];
 
-export async function getPriceTicker(symbol) {
-    const response = await axios.get(`https://www.binance.com/api/v3/ticker?symbol=TRXUSDT`, {
-        headers: {
-            Accept: 'application/json',
-        },
-    });
+export async function getPriceTicker(url, symbol) {
+    const response = await axios.get(`${url}/markets/${symbol}/ticker`);
 
     return {
-        priceChange: response.priceChange,
-        priceChangePercent: response.priceChangePercent,
-        currentPrice: response.openPrice,
-        high: response.highPrice,
-        low: response.lowPrice,
+        priceChange: response.data.priceChange,
+        priceChangePercent: response.data.priceChangePercent,
+        currentPrice: response.data.openPrice,
+        high: response.data.highPrice,
+        low: response.data.lowPrice,
     };
 }
 
-export async function getKlines(symbol, interval = '1m') {
-    const response = await axios.get(`https://fapi.binance.com/fapi/v1/klines?symbol=${symbol}&interval=${interval}&limit=50`);
+export async function getKlines(url, symbol, interval = '1m', limit = 50) {
+    const response = await axios.get(`${url}/markets/${symbol}?interval=${interval}&limit=${limit}`);
 
     const formattedData = await response.data.map((data, key) => {
         return {
-            x: new Date(data[0]),
+            x: new Date(data[6]),
             y: [data[1], data[2], data[3], data[4]],
         };
     });

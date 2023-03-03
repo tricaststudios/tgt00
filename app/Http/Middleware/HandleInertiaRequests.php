@@ -37,6 +37,12 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
                 'wallet' => $request->user()?->wallet()
             ],
+            'env' => [
+                'api_url' => config('app.url') . '/api'
+            ],
+            'binance' => [
+                'api_key' => env('BINANCE_API_KEY')
+            ],
             'settings' => SystemSetting::get()->pluck('value', 'key')->toArray(),
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
