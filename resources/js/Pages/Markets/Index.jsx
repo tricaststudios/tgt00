@@ -48,7 +48,7 @@ export default function Markets({ auth, collection }) {
                                     )}
 
                                     <span className="sr-only"> {item.stats.priceChangePercent > 0 ? 'Increased' : 'Decreased'} by </span>
-                                    {item.stats.priceChangePercent}
+                                    {item.stats.priceChangePercent}%
                                 </P>
                             </dd>
                         </Section>
