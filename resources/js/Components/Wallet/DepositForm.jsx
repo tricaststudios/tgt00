@@ -15,7 +15,7 @@ export default function DepositForm({ account }) {
 
     const [showModal, setShowModal] = useState(false);
 
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset, transform } = useForm({
         wallet_address: '',
         amount: '',
     });
@@ -30,6 +30,8 @@ export default function DepositForm({ account }) {
 
     const submit = async e => {
         e.preventDefault();
+
+        await transform(data => ({ ...data, deposit_account_id: account.id }));
 
         await post(route('user.deposits.store'), {
             onSuccess: async () => {

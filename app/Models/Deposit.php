@@ -12,6 +12,7 @@ class Deposit extends Model
     use HasFactory;
 
     protected $fillable = [
+        'deposit_account_id',
         'wallet_id',
         'wallet_address',
         'status',

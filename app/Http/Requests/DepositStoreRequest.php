@@ -24,6 +24,7 @@ class DepositStoreRequest extends FormRequest
         return [
             'wallet_address' => ['required', 'string'],
             'amount' => ['required', 'numeric'],
+            'deposit_account_id' => ['required', 'numeric', 'exists:deposit_accounts,id']
         ];
     }
 }

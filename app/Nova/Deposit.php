@@ -55,6 +55,7 @@ class Deposit extends Resource
     {
         return [
             BelongsTo::make('User'),
+            BelongsTo::make('Deposit Account'),
             Text::make('TX #', 'uuid'),
             Badge::make('Status')->map([
                 'pending' => 'warning',
