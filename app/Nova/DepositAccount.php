@@ -61,7 +61,7 @@ class DepositAccount extends Resource
                 ->attachUsing(function (HasMedia $model, UploadedFile $file, string $collectionName, string $diskName, string $fieldUuid) {
                     $fileAdder = $model->addMedia($file);
 
-                    $fileAdder->toMediaCollection('avatar', $diskName);
+                    $fileAdder->toMediaCollection('avatar', 'public');
                 })
                 ->autouploading()
                 ->single()
