@@ -13,6 +13,7 @@ return [
         ]
     ],
     'investment' => [
-        'store' => 'Activated miner :miner'
+        'store' => 'Activated miner :miner',
+        'finished' => 'Mining profit.'
     ]
 ];

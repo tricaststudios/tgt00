@@ -16,7 +16,7 @@ class WalletController extends Controller
     {
         return inertia()->render('User/Wallet', [
             'wallets' => $request->user()->wallets,
-            'collection' => $request->user()->transactions()->paginate(20)
+            'collection' => $request->user()->transactions()->latest()->paginate(20)
         ]);
     }
 

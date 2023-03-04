@@ -18,6 +18,7 @@ return new class extends Migration
             $table->uuid();
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(Miner::class)->constrained();
+            $table->string('status');
             $table->unsignedBigInteger('amount');
             $table->unsignedBigInteger('profit');
             $table->timestamp('ends_at');

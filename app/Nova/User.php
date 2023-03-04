@@ -142,10 +142,10 @@ class User extends Resource
     public function actions(NovaRequest $request)
     {
         return [
-            (new MembershipLevelUpdate)->canRun(fn () => true),
-            (new BanAccount)->canRun(fn () => true),
             (new AddBalance)->canRun(fn () => true),
             (new DeductBalance)->canRun(fn () => true),
+            (new MembershipLevelUpdate)->canRun(fn () => true),
+            (new BanAccount)->canRun(fn () => true),
         ];
     }
 
