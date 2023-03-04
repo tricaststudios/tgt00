@@ -2,7 +2,10 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\MarkDepositAsApproved;
+use App\Nova\Actions\MarkDepositAsDeclined;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -51,10 +54,14 @@ class Deposit extends Resource
     {
         return [
             BelongsTo::make('User'),
-            Text::make('Wallet Address'),
             Text::make('TX #', 'uuid'),
-            Text::make('Status'),
-            Text::make('Amount', fn () => number_format($this->amount / 1000000, 4)),
+            Badge::make('Status')->map([
+                'pending' => 'warning',
+                'approved' => 'success',
+                'declined' => 'danger'
+            ]),
+            Text::make('Wallet Address'),
+            Text::make('Amount', fn () => number_format($this->amount / 1000000, 4) . ' USDT'),
             Textarea::make('Remarks'),
         ];
     }
@@ -100,6 +107,9 @@ class Deposit extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            (new MarkDepositAsApproved)->canRun(fn() => true),
+            (new MarkDepositAsDeclined)->canRun(fn() => true),
+        ];
     }
 }
