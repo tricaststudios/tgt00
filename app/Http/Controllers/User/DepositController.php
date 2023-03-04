@@ -19,7 +19,8 @@ class DepositController extends Controller
     {
         $account = DepositAccount::where('is_active', true)->latest()->first();
 
-        $account->media = $account->getMedia('account');
+        if ($account)
+            $account->media = $account->getMedia('account');
 
         return inertia()->render('User/Deposits', [
             'collection' => auth()->user()->deposits()->latest()->paginate(10),

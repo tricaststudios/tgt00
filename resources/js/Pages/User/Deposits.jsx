@@ -25,13 +25,28 @@ export default function Deposits({ auth, collection, account, verified }) {
             </div>
 
             {verified ? (
-                <div className="flex justify-end space-x-3">
-                    <DepositForm account={account} />
-                </div>
+                <>
+                    {account && (
+                        <div className="flex justify-end space-x-3">
+                            <DepositForm account={account} />
+                        </div>
+                    )}
+                </>
             ) : (
-                <Alert type="info" title="Notice!." message={<>
-                    <p className='text-blue-500'>Your account needs to be verified first. to perform deposit. <Link className='underline' href={route('user.profile.edit')}>please click here to verify.</Link></p>
-                </>} />
+                <Alert
+                    type="info"
+                    title="Notice!."
+                    message={
+                        <>
+                            <p className="text-blue-500">
+                                Your account needs to be verified first. to perform deposit.{' '}
+                                <Link className="underline" href={route('user.profile.edit')}>
+                                    please click here to verify.
+                                </Link>
+                            </p>
+                        </>
+                    }
+                />
             )}
 
             {!collection.data.length ? (
@@ -57,7 +72,9 @@ export default function Deposits({ auth, collection, account, verified }) {
                                         <div className="flex justify-between">
                                             <P className="text-xs">
                                                 <span className="font-black">Status:</span>:{' '}
-                                                <Badge type={data.status == 'paid' ? 'success' : 'warning'} value={data.status} />
+                                                {data.status === 'approved' && <Badge type="success" value={data.status} />}
+                                                {data.status === 'pending' && <Badge type="warning" value={data.status} />}
+                                                {data.status === 'declined' && <Badge type="danger" value={data.status} />}
                                             </P>
                                         </div>
                                         <div className="flex justify-between">
@@ -71,7 +88,15 @@ export default function Deposits({ auth, collection, account, verified }) {
                                     </td>
                                     <Table.Data value={data.uuid} />
                                     <Table.Data value={data.wallet_address} />
-                                    <Table.Data value={<Badge type={data.status == 'paid' ? 'success' : 'warning'} value={data.status} />} />
+                                    <Table.Data
+                                        value={
+                                            <>
+                                                {data.status === 'approved' && <Badge type="success" value={data.status} />}
+                                                {data.status === 'pending' && <Badge type="warning" value={data.status} />}
+                                                {data.status === 'declined' && <Badge type="danger" value={data.status} />}
+                                            </>
+                                        }
+                                    />
                                     <Table.Data value={formatUSDT(data.amount) + ' USDT'} />
                                     <Table.Data value={dayjs(data.created_at).format('MMM D, YYYY')} />
                                 </tr>

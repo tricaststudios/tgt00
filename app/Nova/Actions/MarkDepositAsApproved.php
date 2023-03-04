@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use App\Actions\UserVerification\MarkAsApproved as ModelAction;
+use App\Actions\Deposit\MarkAsApproved as ModelAction;
 use App\Actions\Wallet\AddBalance;
 use Illuminate\Support\Facades\DB;
 
@@ -26,21 +26,12 @@ class MarkDepositAsApproved extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $approveAction = new ModelAction;
-        $addBalanceAction = new AddBalance;
+        $action = new ModelAction;
 
-        DB::transaction(function () use ($approveAction, $models, $addBalanceAction) {
-            $models->each(function ($model) use ($approveAction, $addBalanceAction) {
-                $approveAction->handle($model);
-
-                $addBalanceAction->handle($model->user->wallet(), $model->amount, 'cashin', [
-                    'lang_code' => 'transaction.wallet.cashin',
-                    'lang_params' => [
-                        'amount' => $model->amount,
-                        'approved_by' => auth()->id()
-                    ]
-                ]);
-            });
+        DB::transaction(function () use ($action, $models) {
+            $models
+                ->reject(fn ($model) => $model->status === 'approved')
+                ->each(fn ($model) => $action->handle($model));
         });
     }
 

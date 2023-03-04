@@ -5,6 +5,14 @@ const types = {
         span: 'bg-yellow-100 text-yellow-800',
         svg: 'text-yellow-400',
     },
+    danger: {
+        span: 'bg-red-100 text-red-800',
+        svg: 'text-red-400',
+    },
+    success: {
+        span: 'bg-green-100 text-green-800',
+        svg: 'text-green-400',
+    },
 };
 
 export default function Badge({ value, children, type = 'warning' }) {

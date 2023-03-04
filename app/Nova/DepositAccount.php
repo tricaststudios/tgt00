@@ -63,7 +63,6 @@ class DepositAccount extends Resource
 
                     $fileAdder->toMediaCollection('avatar', 'public');
                 })
-                ->autouploading()
                 ->single()
                 ->mediaOnIndex(function (HasMedia $resource, string $collectionName) {
                     return $resource->media()->where('collection_name', 'avatar')->limit(1)->get();

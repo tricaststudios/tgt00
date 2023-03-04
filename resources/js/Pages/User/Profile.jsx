@@ -22,7 +22,7 @@ export default function Edit({ auth, mustVerifyEmail, status, verification }) {
             </Section>
 
             {verification?.status === 'pending' && <Alert type="warning" title="Verification is ongoing." />}
-            {verification?.status === 'declined' && <Alert type="warning" title="Verification failed." message={verification.remarks} />}
+            {verification?.status === 'declined' && <Alert type="danger" title="Verification failed." message={verification.remarks} />}
             {verification?.status !== 'approved' && (
                 <Section>
                     <VerificationForm status={status} verification={verification} className="max-w-xl" />

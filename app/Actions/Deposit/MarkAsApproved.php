@@ -2,13 +2,25 @@
 
 namespace App\Actions\Deposit;
 
-use App\Models\User;
+use App\Actions\Wallet\AddBalance;
 use App\Models\Deposit;
+use Illuminate\Support\Facades\DB;
 
 class MarkAsApproved
 {
-    public function handle(Deposit $deposit)
+    public function handle(Deposit $deposit): Deposit
     {
-        return $deposit->update(['status' => 'approved', 'approved_at' => now()]);
+        ray('sad');
+        return DB::transaction(function () use ($deposit) {
+            (new AddBalance)->handle($deposit->wallet, $deposit->amount, 'deposit', [
+                'lang_code' => 'transaction.wallet.cashin',
+                'lang_params' => [
+                    'amount' => $deposit->amount / 1000000,
+                    'approved_by' => auth()->id()
+                ]
+            ]);
+
+            return tap($deposit)->update(['status' => 'approved', 'approved_at' => now()]);
+        });
     }
 }

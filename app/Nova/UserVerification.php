@@ -62,6 +62,7 @@ class UserVerification extends Resource
             Badge::make('Status')->map([
                 'pending' => 'warning',
                 'approved' => 'success',
+                'declined' => 'danger'
             ]),
             Text::make('Mobile Number'),
             Text::make('Identification Type'),

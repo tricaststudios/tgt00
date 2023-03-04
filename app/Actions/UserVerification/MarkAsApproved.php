@@ -11,7 +11,7 @@ class MarkAsApproved
     public function handle(UserVerification $verification)
     {
         return DB::transaction(function () use ($verification) {
-            $verification->update(['status', 'approved', 'approved_at' => now()]);
+            $verification->update(['status' => 'approved', 'approved_at' => now()]);
         });
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Wallet;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Auth\User;
@@ -16,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->uuid();
             $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Wallet::class);
             $table->string('status');
             $table->string('wallet_address');
             $table->bigInteger('amount');

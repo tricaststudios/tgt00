@@ -2,12 +2,12 @@
 
 namespace App\Actions\UserVerification;
 
-use App\Models\Deposit;
+use App\Models\UserVerification;
 
 class MarkAsDeclined
 {
-    public function handle(Deposit $deposit, $remarks)
+    public function handle(UserVerification $verification, string $remarks)
     {
-        return $deposit->update(['status' => 'declined', 'remarks' => $remarks]);
+        return $verification->update(['status' => 'declined', 'remarks' => $remarks]);
     }
 }

@@ -11,6 +11,7 @@ class Deposit
     public function handle(User $user, array $data): Model
     {
         return DB::transaction(fn () => $user->deposits()->create([
+            'wallet_id' => $user->wallet()->id,
             'wallet_address' => $data['wallet_address'],
             'amount' => $data['amount'] * 1000000
         ]));
