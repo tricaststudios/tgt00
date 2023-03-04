@@ -2,12 +2,15 @@
 
 namespace App\Nova;
 
+use DmitryBubyakin\NovaMedialibraryField\Fields\Medialibrary;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Spatie\MediaLibrary\HasMedia;
 
 class DepositAccount extends Resource
 {
@@ -51,7 +54,21 @@ class DepositAccount extends Resource
     {
         return [
             ID::make()->sortable(),
-            Image::make('Image', 'avatar'),
+            Medialibrary::make('QR')
+                ->resolveMediaUsing(function (HasMedia $model, string $collectionName) {
+                    return $model->getMedia('avatar');
+                })
+                ->attachUsing(function (HasMedia $model, UploadedFile $file, string $collectionName, string $diskName, string $fieldUuid) {
+                    $fileAdder = $model->addMedia($file);
+
+                    $fileAdder->toMediaCollection('avatar', $diskName);
+                })
+                ->autouploading()
+                ->single()
+                ->mediaOnIndex(function (HasMedia $resource, string $collectionName) {
+                    return $resource->media()->where('collection_name', 'avatar')->limit(1)->get();
+                }),
+
             Text::make('Name')->rules('required'),
             Text::make('Address')->rules('required'),
             Boolean::make('Is Active')->rules('boolean')

@@ -10,7 +10,7 @@ import { CalendarDaysIcon } from '@heroicons/react/24/solid';
 import { Head } from '@inertiajs/react';
 import dayjs from 'dayjs';
 
-export default function Deposits({ auth, collection }) {
+export default function Deposits({ auth, collection, account }) {
     const rows = ['Tx #', 'Wallet Address', 'Status', 'Amount', 'Tx Date'];
 
     return (
@@ -25,7 +25,7 @@ export default function Deposits({ auth, collection }) {
             </div>
 
             <div className="flex justify-end space-x-3">
-                <DepositForm />
+                <DepositForm account={account} />
             </div>
 
             {!collection.data.length ? (

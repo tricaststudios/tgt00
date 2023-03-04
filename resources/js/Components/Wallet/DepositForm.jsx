@@ -1,5 +1,6 @@
 import { useForm } from '@inertiajs/react';
 import { useRef, useState } from 'react';
+import P from '../AuthenticatedLayout/P';
 import ButtonPrimary from '../Common/ButtonPrimary';
 import ButtonSecondary from '../Common/ButtonSecondary';
 import Modal from '../Common/Modal';
@@ -9,7 +10,7 @@ import InputLabel from '../Form/InputLabel';
 import TextInput from '../Form/TextInput';
 import NotificationPortal from '../Notification/NotificationPortal';
 
-export default function DepositForm() {
+export default function DepositForm({ account }) {
     const notificationRef = useRef();
 
     const [showModal, setShowModal] = useState(false);
@@ -54,6 +55,13 @@ export default function DepositForm() {
 
             <Modal show={showModal} onClose={closeModal} title="Deposit Form">
                 <form onSubmit={submit} className="space-y-3 p-6">
+                    {account && account?.media?.length > 0 && (
+                        <div className="mb-18 flex flex-col space-y-5 text-center">
+                            <img src={account.media[0].original_url} className="m-auto h-full w-64" alt="" />
+                            <P>{account.name}</P>
+                            <P>{account.address}</P>
+                        </div>
+                    )}
                     <InputGroup>
                         <InputLabel forInput="wallet_address" value="Wallet Address" />
 

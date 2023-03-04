@@ -6,6 +6,7 @@ use App\Actions\Wallet\Deposit as WalletDepositAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DepositStoreRequest;
 use App\Models\Deposit;
+use App\Models\DepositAccount;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 
@@ -16,8 +17,13 @@ class DepositController extends Controller
      */
     public function index(): Response
     {
+        $account = DepositAccount::where('is_active', true)->latest()->first();
+
+        $account->media = $account->getMedia('account');
+
         return inertia()->render('User/Deposits', [
-            'collection' => auth()->user()->deposits()->latest()->paginate(6)
+            'collection' => auth()->user()->deposits()->latest()->paginate(10),
+            'account' => $account,
         ]);
     }
 
