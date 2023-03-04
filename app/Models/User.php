@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Actions\Wallet\CreateNewWallet;
+use App\Traits\Verifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,7 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes, Verifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -108,10 +109,5 @@ class User extends Authenticatable
     public function activeMiners()
     {
         return $this->hasMany(ActiveMiner::class);
-    }
-
-    public function verification()
-    {
-        return $this->hasOne(UserVerification::class, 'user_id');
     }
 }
