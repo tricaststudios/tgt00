@@ -8,6 +8,7 @@ import {
     CreditCardIcon,
     QuestionMarkCircleIcon,
     ServerStackIcon,
+    ShoppingBagIcon,
 } from '@heroicons/react/24/solid';
 import { Link, usePage } from '@inertiajs/react';
 import clsx from 'clsx';
@@ -24,6 +25,7 @@ export default function Sidebar({ showSidebar, setShowSidebar }) {
 
     const subnavigation = [
         { name: 'Active Miners', href: route('user.miners.index'), icon: ServerStackIcon, current: route().current('user.miners.index') },
+        { name: 'Orders', href: route('user.orders.index'), icon: ShoppingBagIcon, current: route().current('user.orders.index') },
         { name: 'Withdrawal Accounts', href: route('user.withdrawals.accounts.index'), icon: BanknotesIcon, current: route().current('user.withdrawals.accounts.index') },
         { name: 'Wallet', href: route('user.wallet.index'), icon: CreditCardIcon, current: route().current('user.wallet.index') },
         { name: 'Withdrawals', href: route('user.withdrawals.index'), icon: ArrowUpTrayIcon, current: route().current('user.withdrawals.index') },

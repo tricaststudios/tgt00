@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-use App\Models\Order;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;
@@ -26,12 +26,4 @@ class OrderController extends Controller
     {
         return back();
     }
-
-    // /**
-    //  * Display the specified resource.
-    //  */
-    // public function show(Order $order): Response
-    // {
-    //     //
-    // }
 }

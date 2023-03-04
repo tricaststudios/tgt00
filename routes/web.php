@@ -5,6 +5,7 @@ use App\Http\Controllers\MinerController;
 
 use App\Http\Controllers\User\ActiveMinerController;
 use App\Http\Controllers\User\DepositController;
+use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\PasswordController;
 use App\Http\Controllers\User\PinController;
 use App\Http\Controllers\User\ProfileController;
@@ -39,6 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::get('miners', [MinerController::class, 'index'])->name('miners.index');
 
     Route::prefix('/user')->as('user.')->group(function () {
+
+        Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+
         Route::get('/deposits', [DepositController::class, 'index'])->name('deposits.index');
         Route::post('/deposits', [DepositController::class, 'store'])->name('deposits.store');
 
