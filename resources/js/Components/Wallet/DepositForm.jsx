@@ -31,14 +31,17 @@ export default function DepositForm({ account }) {
     const submit = async e => {
         e.preventDefault();
 
-        await post(route('deposits.store'));
-        await closeModal();
-        await reset();
+        await post(route('user.deposits.store'), {
+            onSuccess: async () => {
+                await closeModal();
+                await reset();
 
-        notificationRef.current.addMessage({
-            type: 'success',
-            title: 'Success',
-            message: 'Requested new deposit.',
+                notificationRef.current.addMessage({
+                    type: 'success',
+                    title: 'Success',
+                    message: 'Requested new deposit.',
+                });
+            },
         });
     };
     return (
