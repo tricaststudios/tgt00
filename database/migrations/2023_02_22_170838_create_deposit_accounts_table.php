@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('deposit_accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('avatar');
             $table->string('address');
             $table->string('name');
             $table->boolean('is_active');
