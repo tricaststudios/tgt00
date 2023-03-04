@@ -7,11 +7,12 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class MarkAsApproved extends Action
+class MarkVerificationAsApproved extends Action
 {
     use InteractsWithQueue, Queueable;
 
@@ -26,7 +27,9 @@ class MarkAsApproved extends Action
     {
         $action = (new ModelAction);
 
-        $models->each(fn ($model) => $action->handle($model));
+        DB::transaction(function () use ($models, $action) {
+            $models->each(fn ($model) => $action->handle($model));
+        });
     }
 
     /**

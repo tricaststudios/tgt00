@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\MarkDepositAsApproved;
 use App\Nova\Actions\MarkDepositAsDeclined;
+use App\Nova\Filters\Status;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
@@ -85,7 +86,9 @@ class Deposit extends Resource
      */
     public function filters(NovaRequest $request)
     {
-        return [];
+        return [
+            new Status
+        ];
     }
 
     /**

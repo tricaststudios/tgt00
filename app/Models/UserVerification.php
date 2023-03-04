@@ -22,6 +22,7 @@ class UserVerification extends Model implements HasMedia
         'mobile_number',
         'identification_type',
         'identification_value',
+        'remarks'
     ];
 
     public static function booted()

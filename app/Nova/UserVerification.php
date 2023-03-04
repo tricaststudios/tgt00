@@ -2,7 +2,9 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\MarkAsApproved;
+use App\Nova\Actions\MarkVerificationAsApproved;
+use App\Nova\Actions\MarkVerificationAsDeclined;
+use App\Nova\Filters\Status;
 use DmitryBubyakin\NovaMedialibraryField\Fields\Medialibrary;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -56,11 +58,11 @@ class UserVerification extends Resource
         return [
             BelongsTo::make('User'),
             Text::make('First Name'),
+            Text::make('Last Name'),
             Badge::make('Status')->map([
                 'pending' => 'warning',
                 'approved' => 'success',
             ]),
-            Text::make('Last Name'),
             Text::make('Mobile Number'),
             Text::make('Identification Type'),
             Text::make('Identification Value'),
@@ -71,10 +73,11 @@ class UserVerification extends Resource
                 ->attachUsing(function (HasMedia $model, UploadedFile $file, string $collectionName, string $diskName, string $fieldUuid) {
                     $fileAdder = $model->addMedia($file);
 
-                    $fileAdder->toMediaCollection('attachments', $diskName);
+                    $fileAdder->toMediaCollection('attachments', 'public');
                 })
                 ->autouploading()
-                ->mediaOnIndex(1),
+                ->mediaOnIndex(1)
+                ->hideFromIndex(),
         ];
     }
 
@@ -97,7 +100,9 @@ class UserVerification extends Resource
      */
     public function filters(NovaRequest $request)
     {
-        return [];
+        return [
+            new Status
+        ];
     }
 
     /**
@@ -120,7 +125,8 @@ class UserVerification extends Resource
     public function actions(NovaRequest $request)
     {
         return [
-            (new MarkAsApproved)->canRun(fn () => true)
+            (new MarkVerificationAsApproved)->canRun(fn () => true),
+            (new MarkVerificationAsDeclined)->canRun(fn () => true)
         ];
     }
 }

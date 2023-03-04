@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('mobile_number');
             $table->string('identification_type');
             $table->string('identification_value');
+            $table->longText('remarks')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();
         });
