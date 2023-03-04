@@ -2,7 +2,7 @@
 
 namespace App\Nova\Actions;
 
-use App\Actions\UserVerification\MarkAsDeclined;
+use App\Actions\Withdrawal\MarkAsDeclined;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -13,7 +13,7 @@ use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class MarkVerificationAsDeclined extends Action
+class MarkWithdrawalAsDeclined extends Action
 {
     use InteractsWithQueue, Queueable;
 

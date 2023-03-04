@@ -18,6 +18,7 @@ class WithdrawalController extends Controller
     public function index(Request $request): Response
     {
         return inertia()->render('User/Withdrawals', [
+            'hasPin' => (bool) $request->user()->pin,
             'accounts' => $request->user()->withdrawalAccounts,
             'collection' => $request->user()->withdrawals()->with('withdrawalAccount')->paginate(20)
         ]);

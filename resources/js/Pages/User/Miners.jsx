@@ -46,7 +46,7 @@ export default function Wallet({ auth, collection }) {
                                         </div>
                                         <div className="flex justify-between">
                                             <P className="text-xs">
-                                                <span className="font-black">Miner</span>: {data.miner.uuid}
+                                                <span className="font-black">Miner</span>: {data.miner.name}
                                             </P>
                                             <P className="flex items-center text-xs">
                                                 <span className="mr-2 font-black">
@@ -70,7 +70,7 @@ export default function Wallet({ auth, collection }) {
                                         </div>
                                     </td>
                                     <Table.Data value={data.uuid} />
-                                    <Table.Data value={data.miner.uuid} />
+                                    <Table.Data value={data.miner.name} />
                                     <Table.Data value={`${formatUSDT(data.amount)} USDT`} />
                                     <Table.Data value={`${formatUSDT(data.profit)} USDT`} />
                                     <Table.Data value={dayjs(data.created_at).format('MMM D, YYYY h:mm A')} />

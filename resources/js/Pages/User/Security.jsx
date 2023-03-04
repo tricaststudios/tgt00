@@ -12,7 +12,7 @@ export default function Security({ auth, hasPin }) {
             <Section>
                 <UpdatePasswordForm className="max-w-xl" />
             </Section>
-            <Section>{!hasPin ? <CreatePinForm className="max-w-xl" /> : <UpdatePinForm className="max-w-xl" />}</Section>
+            <Section className={hasPin === false && 'border border-red-500'}>{!hasPin ? <CreatePinForm className="max-w-xl" /> : <UpdatePinForm className="max-w-xl" />}</Section>
         </Layout>
     );
 }

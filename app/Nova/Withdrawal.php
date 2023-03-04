@@ -2,7 +2,10 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\MarkWithdrawalAsApproved;
+use App\Nova\Actions\MarkWithdrawalAsDeclined;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
@@ -52,16 +55,20 @@ class Withdrawal extends Resource
         return [
             ID::make()->sortable(),
             BelongsTo::make('User'),
-            BelongsTo::make('Wallet'),
-            BelongsTo::make('Withdrawal Account'),
-            Text::make('Status'),
-            Text::make('Provider Type'),
+            BelongsTo::make('Wallet')->hideFromIndex(),
+            BelongsTo::make('Account', 'withdrawalAccount', WithdrawalAccount::class),
+            Badge::make('Status')->map([
+                'pending' => 'warning',
+                'approved' => 'success',
+                'declined' => 'danger'
+            ]),
+            Text::make('Provider Type')->hideFromIndex(),
             Text::make('Provider Name'),
-            Text::make('Provider ID'),
-            Text::make('Bank Address'),
-            Text::make('Swift Code'),
-            Text::make('Amount'),
-            Text::make('Remarks'),
+            Text::make('Provider ID')->hideFromIndex(),
+            Text::make('Bank Address')->hideFromIndex(),
+            Text::make('Swift Code')->hideFromIndex(),
+            Text::make('Amount', fn () => number_format($this->amount / 1000000, 4) . ' USDT'),
+            Text::make('Remarks')->hideFromIndex(),
             DateTime::make('Request Date', 'created_at')
         ];
     }
@@ -107,6 +114,9 @@ class Withdrawal extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            (new MarkWithdrawalAsApproved)->canRun(fn () => true),
+            (new MarkWithdrawalAsDeclined)->canRun(fn () => true),
+        ];
     }
 }

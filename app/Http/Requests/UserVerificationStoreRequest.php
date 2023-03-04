@@ -22,8 +22,8 @@ class UserVerificationStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['required', 'string', 'max:254'],
-            'last_name' => ['required', 'string', 'max:254'],
+            'first_name' => ['required', 'string', 'max:254', 'alpha'],
+            'last_name' => ['required', 'string', 'max:254', 'alpha'],
             'mobile_number' => ['required', 'numeric'],
             'identification_type' => ['required', 'string'],
             'identification_value' => ['required', 'string'],

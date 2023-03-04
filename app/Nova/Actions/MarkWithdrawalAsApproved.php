@@ -2,7 +2,7 @@
 
 namespace App\Nova\Actions;
 
-use App\Actions\UserVerification\MarkAsDeclined;
+use App\Actions\Withdrawal\MarkAsApproved as ModelAction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -10,10 +10,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class MarkVerificationAsDeclined extends Action
+class MarkWithdrawalAsApproved extends Action
 {
     use InteractsWithQueue, Queueable;
 
@@ -26,12 +25,12 @@ class MarkVerificationAsDeclined extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $action = new MarkAsDeclined;
+        $action = new ModelAction;
 
-        DB::transaction(function () use ($fields, $models, $action) {
+        DB::transaction(function () use ($action, $models) {
             $models
                 ->reject(fn ($model) => $model->status === 'approved')
-                ->each(fn ($model) => $action->handle($model, $fields->remarks));
+                ->each(fn ($model) => $action->handle($model));
         });
     }
 
@@ -43,8 +42,6 @@ class MarkVerificationAsDeclined extends Action
      */
     public function fields(NovaRequest $request)
     {
-        return [
-            Textarea::make('remarks')->rules('required', 'string', 'max:254')
-        ];
+        return [];
     }
 }

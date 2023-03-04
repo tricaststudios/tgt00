@@ -66,7 +66,7 @@ export default function Deposits({ auth, collection, account, verified }) {
                                                 <span className="font-black">
                                                     <CalendarDaysIcon className="h-5 w-5" />
                                                 </span>
-                                                {dayjs(data.created_at).format('MMM D, YYYY')}
+                                                {dayjs(data.ends_at).format('MMM D, YYYY h:mm A')}
                                             </P>
                                         </div>
                                         <div className="flex justify-between">
@@ -98,7 +98,7 @@ export default function Deposits({ auth, collection, account, verified }) {
                                         }
                                     />
                                     <Table.Data value={formatUSDT(data.amount) + ' USDT'} />
-                                    <Table.Data value={dayjs(data.created_at).format('MMM D, YYYY')} />
+                                    <Table.Data value={dayjs(data.ends_at).format('MMM D, YYYY h:mm A')} />
                                 </tr>
                             ))}
                         </Table>

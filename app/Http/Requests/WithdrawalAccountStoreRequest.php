@@ -27,8 +27,8 @@ class WithdrawalAccountStoreRequest extends FormRequest
             'provider_type' => ['required', 'max:254', 'in:crypto-wallet,bank'],
             'provider_name' => ['required', 'string', 'max:254'],
             'provider_id' => ['required', 'string', 'max:254'],
-            'bank_address' => ['required_if:provider_type,bank', 'string', 'max:254'],
-            'swift_code' => ['required_if:provider_type,bank', 'string', 'max:254'],
+            'bank_address' => ['required_if:provider_type,bank', 'nullable', 'string', 'max:254'],
+            'swift_code' => ['required_if:provider_type,bank', 'nullable', 'string', 'max:254'],
         ];
     }
 
@@ -51,7 +51,7 @@ class WithdrawalAccountStoreRequest extends FormRequest
 
             if (
                 $this->provider_type === 'crypto-wallet'
-                && $this->user()->withdrawalAccounts()->whereIn('provider_name', ['BTC', 'ETH', 'USDT'])->count() >= 1
+                && $this->user()->withdrawalAccounts()->where('provider_name', $this->provider_name)->count() >= 1
             ) $validator->errors()->add('provider_name', "You can't create more than one {$this->provider_name} withdrawal account.");
         });
     }

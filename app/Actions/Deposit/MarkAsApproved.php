@@ -10,7 +10,6 @@ class MarkAsApproved
 {
     public function handle(Deposit $deposit): Deposit
     {
-        ray('sad');
         return DB::transaction(function () use ($deposit) {
             (new AddBalance)->handle($deposit->wallet, $deposit->amount, 'deposit', [
                 'lang_code' => 'transaction.wallet.cashin',

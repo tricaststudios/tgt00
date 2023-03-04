@@ -10,7 +10,7 @@ import { CalendarDaysIcon } from '@heroicons/react/24/solid';
 import { Head, Link } from '@inertiajs/react';
 import dayjs from 'dayjs';
 
-export default function Withdrawals({ auth, accounts, collection }) {
+export default function Withdrawals({ auth, accounts, collection, hasPin }) {
     const rows = ['Tx #', 'Status', 'Type', 'Provider Name', 'Provider ID', 'Amount', 'Tx Date'];
 
     return (
@@ -24,15 +24,32 @@ export default function Withdrawals({ auth, accounts, collection }) {
                 </Section>
             </div>
 
-            <div className="flex justify-end space-x-3">
-                <WithdrawalForm accounts={accounts} />
-                <Link
-                    href={route('user.withdrawals.accounts.index')}
-                    className="inline-flex items-center rounded-md border border-transparent bg-neutral-600 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-neutral-700 focus:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 active:bg-neutral-900 dark:bg-neutral-200 dark:text-neutral-800 dark:hover:bg-white dark:focus:bg-white dark:focus:ring-offset-neutral-800 dark:active:bg-neutral-300"
-                >
-                    Create Account
-                </Link>
-            </div>
+            {hasPin ? (
+                <div className="flex justify-end space-x-3">
+                    <WithdrawalForm accounts={accounts} />
+                    <Link
+                        href={route('user.withdrawals.accounts.index')}
+                        className="inline-flex items-center rounded-md border border-transparent bg-neutral-600 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-neutral-700 focus:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2 active:bg-neutral-900 dark:bg-neutral-200 dark:text-neutral-800 dark:hover:bg-white dark:focus:bg-white dark:focus:ring-offset-neutral-800 dark:active:bg-neutral-300"
+                    >
+                        Create Account
+                    </Link>
+                </div>
+            ) : (
+                <Alert
+                    type="info"
+                    title="Notice!."
+                    message={
+                        <>
+                            <p className="text-blue-500">
+                                Your account needs to withdrawal pin.{' '}
+                                <Link className="underline" href={route('user.security.edit')}>
+                                    please click here to create new pin.
+                                </Link>
+                            </p>
+                        </>
+                    }
+                />
+            )}
 
             {!collection.data.length ? (
                 <Alert type="warning" title="No transactions found." />
@@ -45,36 +62,46 @@ export default function Withdrawals({ auth, accounts, collection }) {
                                     <td className="table-cell space-y-3 whitespace-normal py-7 pr-3 pl-3 text-sm font-medium text-zinc-900 lg:hidden">
                                         <div className="flex justify-between">
                                             <P className="text-xs">
-                                                <span className="font-black">TX#</span>: iuqhwjnkdaskduhqwiud
+                                                <span className="font-black">TX#</span>: {data.uuid}
                                             </P>
                                             <P className="flex items-center text-xs">
                                                 <span className="font-black">
                                                     <CalendarDaysIcon className="h-5 w-5" />
                                                 </span>
-                                                July 10, 2023
+                                                {dayjs(data.ends_at).format('MMM D, YYYY h:mm A')}
                                             </P>
                                         </div>
                                         <div className="flex justify-between">
                                             <P className="text-xs">
-                                                <span className="font-black">Type</span>: Commission
+                                                <span className="font-black">Provider Name</span>: {data.withdrawal_account.provider_name}
                                             </P>
                                         </div>
                                         <div className="flex justify-between">
-                                            <P className="flex items-center !text-xs">Received commission from Yuwan.</P>
+                                            <P className="flex items-center !text-xs">
+                                                <span className="font-black">Provider ID</span>: {data.withdrawal_account.provider_id}
+                                            </P>
                                         </div>
                                         <div className="flex justify-end">
                                             <P className="text-xs !text-green-500">
-                                                <span className="font-bold">AMOUNT</span>: 1.2324 USDT
+                                                <span className="font-bold">AMOUNT</span>: {formatUSDT(data.amount) + ' USDT'}
                                             </P>
                                         </div>
                                     </td>
                                     <Table.Data value={data.uuid} />
-                                    <Table.Data value={<Badge type={data.status == 'paid' ? 'success' : 'warning'} value={data.status} />} />
+                                    <Table.Data
+                                        value={
+                                            <>
+                                                {data.status === 'approved' && <Badge type="success" value={data.status} />}
+                                                {data.status === 'pending' && <Badge type="warning" value={data.status} />}
+                                                {data.status === 'declined' && <Badge type="danger" value={data.status} />}
+                                            </>
+                                        }
+                                    />
                                     <Table.Data value={data.withdrawal_account.provider_type} />
                                     <Table.Data value={data.withdrawal_account.provider_name} />
                                     <Table.Data value={data.withdrawal_account.provider_id} />
-                                    <Table.Data value={formatUSDT(data.amount)} />
-                                    <Table.Data value={dayjs(data.created_at).format('MMM D, YYYY')} />
+                                    <Table.Data value={formatUSDT(data.amount) + ' USDT'} />
+                                    <Table.Data value={dayjs(data.ends_at).format('MMM D, YYYY h:mm A')} />
                                 </tr>
                             ))}
                         </Table>
