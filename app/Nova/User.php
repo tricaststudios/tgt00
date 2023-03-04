@@ -3,7 +3,9 @@
 namespace App\Nova;
 
 use App\Models\Session;
+use App\Nova\Actions\AddBalance;
 use App\Nova\Actions\BanAccount;
+use App\Nova\Actions\DeductBalance;
 use App\Nova\Actions\MembershipLevelUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
@@ -142,6 +144,8 @@ class User extends Resource
         return [
             (new MembershipLevelUpdate)->canRun(fn () => true),
             (new BanAccount)->canRun(fn () => true),
+            (new AddBalance)->canRun(fn () => true),
+            (new DeductBalance)->canRun(fn () => true),
         ];
     }
 
