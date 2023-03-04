@@ -7,10 +7,10 @@ import DepositForm from '@/Components/Wallet/DepositForm';
 import Layout from '@/Layouts/AuthenticatedLayout';
 import { formatUSDT } from '@/Lib/wallet';
 import { CalendarDaysIcon } from '@heroicons/react/24/solid';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import dayjs from 'dayjs';
 
-export default function Deposits({ auth, collection, account }) {
+export default function Deposits({ auth, collection, account, verified }) {
     const rows = ['Tx #', 'Wallet Address', 'Status', 'Amount', 'Tx Date'];
 
     return (
@@ -24,9 +24,15 @@ export default function Deposits({ auth, collection, account }) {
                 </Section>
             </div>
 
-            <div className="flex justify-end space-x-3">
-                <DepositForm account={account} />
-            </div>
+            {verified ? (
+                <div className="flex justify-end space-x-3">
+                    <DepositForm account={account} />
+                </div>
+            ) : (
+                <Alert type="info" title="Notice!." message={<>
+                    <p className='text-blue-500'>Your account needs to be verified first. to perform deposit. <Link className='underline' href={route('user.profile.edit')}>please click here to verify.</Link></p>
+                </>} />
+            )}
 
             {!collection.data.length ? (
                 <Alert type="warning" title="No transactions found." />
@@ -50,7 +56,8 @@ export default function Deposits({ auth, collection, account }) {
                                         </div>
                                         <div className="flex justify-between">
                                             <P className="text-xs">
-                                                <span className="font-black">Status:</span>: <Badge type={data.status == 'paid' ? 'success' : 'warning'} value={data.status} />
+                                                <span className="font-black">Status:</span>:{' '}
+                                                <Badge type={data.status == 'paid' ? 'success' : 'warning'} value={data.status} />
                                             </P>
                                         </div>
                                         <div className="flex justify-between">
@@ -65,7 +72,7 @@ export default function Deposits({ auth, collection, account }) {
                                     <Table.Data value={data.uuid} />
                                     <Table.Data value={data.wallet_address} />
                                     <Table.Data value={<Badge type={data.status == 'paid' ? 'success' : 'warning'} value={data.status} />} />
-                                    <Table.Data value={formatUSDT(data.amount) + " USDT"} />
+                                    <Table.Data value={formatUSDT(data.amount) + ' USDT'} />
                                     <Table.Data value={dayjs(data.created_at).format('MMM D, YYYY')} />
                                 </tr>
                             ))}

@@ -24,6 +24,7 @@ class DepositController extends Controller
         return inertia()->render('User/Deposits', [
             'collection' => auth()->user()->deposits()->latest()->paginate(10),
             'account' => $account,
+            'verified' => auth()->user()->verification?->status === 'approved'
         ]);
     }
 
