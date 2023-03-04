@@ -39,33 +39,33 @@ export default function Deposits({ auth, collection, account }) {
                                     <td className="table-cell space-y-3 whitespace-normal py-7 pr-3 pl-3 text-sm font-medium text-zinc-900 lg:hidden">
                                         <div className="flex justify-between">
                                             <P className="text-xs">
-                                                <span className="font-black">TX#</span>: iuqhwjnkdaskduhqwiud
+                                                <span className="font-black">TX#</span>: {data.uuid}
                                             </P>
                                             <P className="flex items-center text-xs">
                                                 <span className="font-black">
                                                     <CalendarDaysIcon className="h-5 w-5" />
                                                 </span>
-                                                July 10, 2023
+                                                {dayjs(data.created_at).format('MMM D, YYYY')}
                                             </P>
                                         </div>
                                         <div className="flex justify-between">
                                             <P className="text-xs">
-                                                <span className="font-black">Type</span>: Commission
+                                                <span className="font-black">Status:</span>: <Badge type={data.status == 'paid' ? 'success' : 'warning'} value={data.status} />
                                             </P>
                                         </div>
                                         <div className="flex justify-between">
-                                            <P className="flex items-center !text-xs">Received commission from Yuwan.</P>
+                                            <P className="flex items-center !text-xs">Wallet address: {data.wallet_address}.</P>
                                         </div>
                                         <div className="flex justify-end">
                                             <P className="text-xs !text-green-500">
-                                                <span className="font-bold">AMOUNT</span>: 1.2324 USDT
+                                                <span className="font-bold">AMOUNT</span>: {formatUSDT(data.amount)} USDT
                                             </P>
                                         </div>
                                     </td>
                                     <Table.Data value={data.uuid} />
                                     <Table.Data value={data.wallet_address} />
                                     <Table.Data value={<Badge type={data.status == 'paid' ? 'success' : 'warning'} value={data.status} />} />
-                                    <Table.Data value={formatUSDT(data.amount)} />
+                                    <Table.Data value={formatUSDT(data.amount) + " USDT"} />
                                     <Table.Data value={dayjs(data.created_at).format('MMM D, YYYY')} />
                                 </tr>
                             ))}
