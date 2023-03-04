@@ -21,7 +21,7 @@ return new class extends Migration
             $table->bigInteger('amount');
             $table->longText('remarks')->nullable();
             $table->jsonb('metadata')->nullable();
-            $table->timestamp('paid_at')->nullable();
+            $table->timestamp('approved_at')->nullable();
             $table->timestamps();
         });
     }
