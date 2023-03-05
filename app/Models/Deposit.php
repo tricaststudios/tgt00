@@ -53,4 +53,9 @@ class Deposit extends Model
     {
         return $this->belongsTo(Wallet::class);
     }
+
+    public function depositAccount()
+    {
+        return $this->belongsTo(DepositAccount::class);
+    }
 }
