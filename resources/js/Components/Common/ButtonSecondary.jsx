@@ -1,4 +1,4 @@
-export default function ButtonSecondary({ type = 'button', className = '', processing, children, onClick }) {
+export default function ButtonSecondary({ type = 'button', className = '', processing, children, onClick, disabled = false }) {
     return (
         <button
             type={type}
@@ -8,7 +8,7 @@ export default function ButtonSecondary({ type = 'button', className = '', proce
                     processing && 'opacity-25'
                 } ` + className
             }
-            disabled={processing}
+            disabled={processing || disabled}
         >
             {children}
         </button>

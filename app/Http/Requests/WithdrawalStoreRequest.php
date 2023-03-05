@@ -30,7 +30,6 @@ class WithdrawalStoreRequest extends FormRequest
         ];
     }
 
-
     /**
      * Configure the validator instance.
      */
@@ -42,7 +41,7 @@ class WithdrawalStoreRequest extends FormRequest
             }
 
             if ($this->user()->wallet()->balance - ($this->amount * 1000000) < 0) {
-                $validator->errors()->add('amount', 'Insufficient balance!');
+                $validator->errors()->add('amount', 'Insufficient balance.');
             }
         });
     }

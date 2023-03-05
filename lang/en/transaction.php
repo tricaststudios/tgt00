@@ -15,5 +15,10 @@ return [
     'investment' => [
         'store' => 'Activated miner :miner',
         'finished' => 'Mining profit.'
+    ],
+    'order' => [
+        'store' => 'Activated miner :miner',
+        'win' => '',
+        'lose' => ''
     ]
 ];

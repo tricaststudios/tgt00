@@ -34,9 +34,10 @@ use Inertia\Inertia;
 Route::get('/', fn () => redirect()->route('dashboard'));
 Route::get('/dashboard', fn () => Inertia::render('User/Dashboard'))->name('dashboard');
 
-Route::resource('markets', MarketController::class)->only('index', 'show');
+Route::get('markets', [MarketController::class, 'index'])->name('markets.index');
 
 Route::middleware('auth')->group(function () {
+    Route::get('markets/{market}', [MarketController::class, 'show'])->name('markets.show');
     Route::get('miners', [MinerController::class, 'index'])->name('miners.index');
 
     Route::prefix('/user')->as('user.')->group(function () {

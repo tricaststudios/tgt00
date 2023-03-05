@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-export default function ButtonPrimary({ type = 'submit', className = '', processing, children, onClick }) {
+export default function ButtonPrimary({ type = 'submit', className = '', processing, children, onClick, disabled }) {
     return (
         <button
             type={type}
@@ -10,7 +10,7 @@ export default function ButtonPrimary({ type = 'submit', className = '', process
                 processing && 'cursor-not-allowed opacity-25',
                 className,
             )}
-            disabled={processing}
+            disabled={processing || disabled}
         >
             {processing ? (
                 <div className="relative block items-center justify-center">

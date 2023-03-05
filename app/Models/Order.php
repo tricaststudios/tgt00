@@ -10,6 +10,16 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'market_id',
+        'status',
+        'type',
+        'interval',
+        'win_percentage',
+        'buy_amount',
+        'sell_amount',
+        'amount'
+    ];
 
     public static function booted()
     {

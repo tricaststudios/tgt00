@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Actions\Order\CreateNewOrder;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OrderStoreRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;
@@ -22,8 +24,10 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(OrderStoreRequest $request, CreateNewOrder $action): RedirectResponse
     {
+        $action->handle($request->user(), $request->validated());
+
         return back();
     }
 }

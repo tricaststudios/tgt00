@@ -15,12 +15,16 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Market::class);
-            $table->string('status');
+            $table->string('status'); // pending, win - lose
+            $table->string('type'); // high - low
+            $table->integer('interval'); // interval in seconds before draw
+            $table->integer('win_percentage'); // percentage per interval
             $table->string('buy_amount');
-            $table->string('sell_amount');
-            $table->integer('amount');
+            $table->string('sell_amount')->nullable();
+            $table->unsignedBigInteger('amount');
             $table->timestamps();
         });
     }
