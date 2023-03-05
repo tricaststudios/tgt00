@@ -28,7 +28,7 @@ class MarkOrderAsWin extends Action
     {
         $action = new MarkOrderAsWinAction;
 
-        DB::transaction(fn () => $models->each(fn ($model) => $action->handle($model, [
+        DB::transaction(fn () => $models->reject(fn ($model) => $model->status !== 'pending')->each(fn ($model) => $action->handle($model, [
             'sell_amount' => $fields->sell_amount
         ])));
     }

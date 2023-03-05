@@ -28,7 +28,7 @@ class MarkOrderAsLose extends Action
     {
         $action = new MarkOrderAsLoseAction;
 
-        DB::transaction(fn () => $models->each(fn ($model) => $action->handle($model, [
+        DB::transaction(fn () => $models->reject(fn ($model) => $model->status !== 'pending')->each(fn ($model) => $action->handle($model, [
             'sell_amount' => $fields->sell_amount
         ])));
     }
@@ -42,7 +42,8 @@ class MarkOrderAsLose extends Action
     public function fields(NovaRequest $request)
     {
         return [
-            Number::make('Sell Amount')->rules('required', 'numeric'),
+            Number::make('Sell Amount')->rules('required', 'numeric')
+                ->step('0.01'),
         ];
     }
 }
