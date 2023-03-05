@@ -4,9 +4,11 @@ namespace App\Nova;
 
 use App\Models\Session;
 use App\Nova\Actions\AddBalance;
+use App\Nova\Actions\AssignUserRole;
 use App\Nova\Actions\BanAccount;
 use App\Nova\Actions\DeductBalance;
 use App\Nova\Actions\MembershipLevelUpdate;
+use App\Nova\Actions\RemoveUserRole;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Laravel\Nova\Fields\Gravatar;
@@ -144,6 +146,10 @@ class User extends Resource
         return [
             (new AddBalance)->canRun(fn () => true),
             (new DeductBalance)->canRun(fn () => true),
+
+            (new AssignUserRole)->canRun(fn () => true),
+            (new RemoveUserRole)->canRun(fn () => true),
+
             (new MembershipLevelUpdate)->canRun(fn () => true),
             (new BanAccount)->canRun(fn () => true),
         ];

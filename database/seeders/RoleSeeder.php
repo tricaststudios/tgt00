@@ -11,6 +11,7 @@ class RoleSeeder extends Seeder
     protected $roles = [
         'super-admin',
         'admin',
+        'officer'
     ];
 
     /**
