@@ -11,7 +11,11 @@ export default function Table({ rows, children }) {
                             <thead className="hidden lg:table-header-group">
                                 <tr>
                                     {rows.map((item, index) => (
-                                        <th key={index} scope="col" className="py-3.5 pb-9 pl-3 text-left text-sm font-semibold text-zinc-900">
+                                        <th
+                                            key={index}
+                                            scope="col"
+                                            className="truncate py-3.5 pb-9 pl-3 text-left text-sm font-semibold text-zinc-900"
+                                        >
                                             <P>{item}</P>
                                         </th>
                                     ))}
