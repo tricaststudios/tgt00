@@ -9,6 +9,7 @@ use App\Nova\Actions\BanAccount;
 use App\Nova\Actions\DeductBalance;
 use App\Nova\Actions\MembershipLevelUpdate;
 use App\Nova\Actions\RemoveUserRole;
+use App\Nova\Lenses\Officers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Laravel\Nova\Fields\Gravatar;
@@ -132,7 +133,9 @@ class User extends Resource
      */
     public function lenses(NovaRequest $request)
     {
-        return [];
+        return [
+            new Officers
+        ];
     }
 
     /**
