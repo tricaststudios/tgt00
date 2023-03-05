@@ -17,7 +17,7 @@ class OrderController extends Controller
     public function index(Request $request): Response
     {
         return inertia()->render('User/Orders', [
-            'collection' => $request->user()->orders()->latest()->paginate(20),
+            'collection' => $request->user()->orders()->with('market')->latest()->paginate(20),
         ]);
     }
 
