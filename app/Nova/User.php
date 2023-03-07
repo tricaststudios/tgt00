@@ -9,6 +9,7 @@ use App\Nova\Actions\BanAccount;
 use App\Nova\Actions\DeductBalance;
 use App\Nova\Actions\MembershipLevelUpdate;
 use App\Nova\Actions\RemoveUserRole;
+use App\Nova\Actions\UnbanAccount;
 use App\Nova\Lenses\Officers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
@@ -155,6 +156,7 @@ class User extends Resource
 
             (new MembershipLevelUpdate)->canRun(fn () => true),
             (new BanAccount)->canRun(fn () => true),
+            (new UnbanAccount)->canRun(fn () => true),
         ];
     }
 

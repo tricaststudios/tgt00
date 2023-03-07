@@ -4,11 +4,11 @@ namespace App\Actions\Auth;
 
 use App\Models\User;
 
-class BanUser
+class UnbanUser
 {
     public function handle(User $user): User
     {
-        $user->banned_at = now();
+        $user->banned_at = null;
 
         $user->save();
 

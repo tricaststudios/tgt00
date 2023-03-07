@@ -2,7 +2,7 @@
 
 namespace App\Nova\Actions;
 
-use App\Actions\Auth\BanUser;
+use App\Actions\Auth\UnbanUser;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -12,7 +12,7 @@ use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class BanAccount extends Action
+class UnbanAccount extends Action
 {
     use InteractsWithQueue, Queueable;
 
@@ -25,7 +25,7 @@ class BanAccount extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $action = new BanUser;
+        $action = new UnbanUser;
 
         DB::transaction(fn () => $models->each(fn ($model) => $action->handle($model)));
     }
