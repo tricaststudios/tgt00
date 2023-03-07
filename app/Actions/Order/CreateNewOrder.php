@@ -3,6 +3,7 @@
 namespace App\Actions\Order;
 
 use App\Actions\Wallet\DeductBalance;
+use App\Jobs\EndOrder;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -25,6 +26,8 @@ class CreateNewOrder
                     'win_percentage' => $data['win_percentage'],
                 ]
             ]);
+
+            EndOrder::dispatch($order)->delay($order->created_at->addSeconds($data['interval']));
         });
     }
 }

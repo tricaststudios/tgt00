@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Actions\ActiveMiners\EndLifeCycle;
-use App\Models\ActiveMiner;
+use App\Actions\Order\EndOrder as OrderEndAction;
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,16 +11,16 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class ActivateMiner implements ShouldQueue
+class EndOrder implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(public ActiveMiner $miner)
-    {
-        //
+    public function __construct(
+        public Order $order
+    ) {
     }
 
     /**
@@ -28,6 +28,6 @@ class ActivateMiner implements ShouldQueue
      */
     public function handle(): void
     {
-        (new EndLifeCycle)->handle($this->miner);
+        (new OrderEndAction)->handle($this->order);
     }
 }

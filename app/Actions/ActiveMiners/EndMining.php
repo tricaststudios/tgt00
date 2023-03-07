@@ -6,7 +6,7 @@ use App\Actions\Wallet\AddBalance;
 use App\Models\ActiveMiner;
 use Illuminate\Support\Facades\DB;
 
-class EndLifeCycle
+class EndMining
 {
     public function handle(ActiveMiner $miner)
     {
