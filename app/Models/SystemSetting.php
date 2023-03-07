@@ -10,6 +10,11 @@ class SystemSetting extends Model
 {
     use HasFactory, Actionable;
 
+    protected $fillable = [
+        'key',
+        'value'
+    ];
+
     public static function booted()
     {
         static::saving(function ($model) {

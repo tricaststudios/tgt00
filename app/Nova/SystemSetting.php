@@ -2,8 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\CreateNewSystemSetting;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -96,7 +96,9 @@ class SystemSetting extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            (new CreateNewSystemSetting)->canRun(fn () => true)->standalone(),
+        ];
     }
 
     /**

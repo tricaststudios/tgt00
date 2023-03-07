@@ -14,5 +14,6 @@ class SystemSettingSeeder extends Seeder
     public function run(): void
     {
         SystemSetting::create(['key' => 'telegram_url']);
+        SystemSetting::create(['key' => 'order_win_percentage']);
     }
 }
