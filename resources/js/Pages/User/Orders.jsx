@@ -13,7 +13,7 @@ export default function Wallet({ auth, collection }) {
     const rows = ['TX #', 'Market', 'Type', 'Status', 'Amount', 'Interval / Scale', 'TX Date'];
     return (
         <Layout auth={auth}>
-            <Head title="Active Miners" />
+            <Head title="Market Orders" />
 
             <div className="flex justify-end space-x-3">
                 <Link
@@ -25,7 +25,7 @@ export default function Wallet({ auth, collection }) {
             </div>
 
             {!collection.data.length ? (
-                <Alert type="warning" title="No miners found." />
+                <Alert type="warning" title="No market orders found." />
             ) : (
                 <>
                     <Section>
