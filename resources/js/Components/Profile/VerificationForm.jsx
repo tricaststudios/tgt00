@@ -124,24 +124,27 @@ export default function VerificationForm({ className, verification }) {
                 <InputGroup>
                     <InputLabel for="identification_type" value="ID Type" />
 
-                    <TextInput
-                        type="tel"
+                    <select
                         id="identification_type"
-                        className="block w-full"
-                        value={data.identification_type}
-                        handleChange={e => setData('identification_type', e.target.value)}
-                        required
-                        autoComplete="identification_type"
-                    />
+                        name="identification_type"
+                        onChange={e => setData('identification_type', e.target.value)}
+                        className="block w-full rounded-md dark:bg-neutral-900 dark:text-neutral-300 border-gray-300 py-3 pl-3 pr-10 text-base focus:border-neutral-500 focus:outline-none focus:ring-neutral-500 sm:text-sm"
+                        defaultValue="Canada"
+                    >
+                        <option value="">Choose ID Type</option>
+                        <option value="passport">Passport</option>
+                        <option value="drivers-license">Driver's License</option>
+                        <option value="id-card">ID Card</option>
+                    </select>
 
                     <InputError message={errors.identification_type} />
                 </InputGroup>
 
                 <InputGroup>
-                    <InputLabel for="identification_value" value="ID Number" />
+                    <InputLabel for="identification_value" value="ID #" />
 
                     <TextInput
-                        type="tel"
+                        type="text"
                         id="identification_value"
                         className="block w-full"
                         value={data.identification_value}
