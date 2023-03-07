@@ -82,7 +82,11 @@ export default function DepositForm({ account }) {
                             <CopyToClipboard text={account.address}>
                                 <ButtonSecondary onClick={() => setCopied(true)} className="m-auto flex items-center space-x-3">
                                     <P>{account.address}</P>
-                                    {copied == true ? <CheckCircleIcon className="h-5 w-5 fill-green-500" /> : <ClipboardDocumentCheckIcon className="h-5 w-5" />}
+                                    {copied == true ? (
+                                        <CheckCircleIcon className="h-5 w-5 fill-green-500" />
+                                    ) : (
+                                        <ClipboardDocumentCheckIcon className="h-5 w-5" />
+                                    )}
                                 </ButtonSecondary>
                             </CopyToClipboard>
                         </div>
