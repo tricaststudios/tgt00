@@ -194,7 +194,7 @@ export default function Sidebar({ showSidebar, setShowSidebar }) {
                             {usePage().props.settings.telegram_url && (
                                 <div className="mt-10 border-t border-neutral-400 dark:border-neutral-500">
                                     <div className="mt-5 space-y-1">
-                                        <SidebarSublink href="" current={false}>
+                                        <SidebarSublink href={usePage().props.settings.telegram_url} current={false}>
                                             <QuestionMarkCircleIcon
                                                 className={clsx(
                                                     false ? 'text-slate-300' : 'text-slate-400 group-hover:text-slate-300',

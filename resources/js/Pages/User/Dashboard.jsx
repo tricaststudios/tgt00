@@ -17,7 +17,7 @@ export default function Dashboard({ auth }) {
     return (
         <AuthenticatedLayout auth={auth}>
             <Head title="Dashboard" />
-            <div className="mx-auto grid max-w-2xl grid-cols-1 gap-y-5 gap-x-8 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+            <div className="mx-auto grid max-w-2xl grid-cols-1 gap-y-5 gap-x-8 lg:mx-0 lg:max-w-none md:grid-cols-2 xl:grid-cols-3">
                 {posts.map((item, index) => (
                     <Section>
                         <a key={index} href={item.href} target="_blank">
