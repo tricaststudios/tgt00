@@ -1,4 +1,5 @@
 import { ArrowLeftOnRectangleIcon, Bars3BottomLeftIcon, LockClosedIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import { UserGroupIcon } from '@heroicons/react/24/solid';
 import Dropdown from '../Common/Dropdown';
 
 export default function TopNavigation({ auth, setShowSidebar }) {
@@ -41,12 +42,22 @@ export default function TopNavigation({ auth, setShowSidebar }) {
                                                 <span>Account</span>
                                             </span>
                                         </Dropdown.Link>
+
                                         <Dropdown.Link href={route('user.security.edit')}>
                                             <span className="flex items-center">
                                                 <LockClosedIcon className="-ml-1 mr-3 h-5 w-5 flex-shrink-0" />
                                                 <span>Security</span>
                                             </span>
                                         </Dropdown.Link>
+
+                                        {auth.user.roles.some(role => role.name === 'admin') && (
+                                            <Dropdown.Link href='/tgt-admin'>
+                                                <span className="flex items-center">
+                                                    <UserGroupIcon className="-ml-1 mr-3 h-5 w-5 flex-shrink-0" />
+                                                    <span>Admin</span>
+                                                </span>
+                                            </Dropdown.Link>
+                                        )}
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             <span className="flex items-center">
                                                 <ArrowLeftOnRectangleIcon className="-ml-1 mr-3 h-5 w-5 flex-shrink-0" />
