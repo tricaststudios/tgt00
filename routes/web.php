@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\MarketController;
 use App\Http\Controllers\MinerController;
-
 use App\Http\Controllers\User\ActiveMinerController;
 use App\Http\Controllers\User\DepositController;
 use App\Http\Controllers\User\OrderController;
@@ -15,8 +14,6 @@ use App\Http\Controllers\User\WalletController;
 use App\Http\Controllers\User\WithdrawalAccountController;
 use App\Http\Controllers\User\WithdrawalController;
 use App\Http\Controllers\User\UserVerificationController;
-
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -41,7 +38,6 @@ Route::middleware('auth')->group(function () {
     Route::get('miners', [MinerController::class, 'index'])->name('miners.index');
 
     Route::prefix('/user')->as('user.')->group(function () {
-
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
         Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 
