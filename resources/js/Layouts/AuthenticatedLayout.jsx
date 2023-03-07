@@ -1,6 +1,6 @@
+import BottomNavigation from '@/Components/AuthenticatedLayout/BottomNavigation';
 import Sidebar from '@/Components/AuthenticatedLayout/Sidebar';
 import TopNavigation from '@/Components/AuthenticatedLayout/TopNavigation';
-import BottomNavigation from '@/Components/AuthenticatedLayout/BottomNavigation';
 import { useState } from 'react';
 
 export default function Layout({ auth, children }) {
@@ -8,7 +8,7 @@ export default function Layout({ auth, children }) {
 
     return (
         <>
-            <div className="relative isolate min-h-screen bg-neutral-200 dark:bg-neutral-900 pb-24 lg:pb-0">
+            <div className="relative isolate min-h-screen bg-neutral-200 pb-24 dark:bg-neutral-900 lg:pb-0">
                 <div className="flex">
                     <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
 

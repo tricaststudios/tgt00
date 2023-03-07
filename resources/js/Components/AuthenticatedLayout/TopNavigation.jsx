@@ -51,7 +51,7 @@ export default function TopNavigation({ auth, setShowSidebar }) {
                                         </Dropdown.Link>
 
                                         {auth.user.roles.some(role => role.name === 'admin') && (
-                                            <Dropdown.Link href='/tgt-admin'>
+                                            <Dropdown.Link href="/tgt-admin">
                                                 <span className="flex items-center">
                                                     <UserGroupIcon className="-ml-1 mr-3 h-5 w-5 flex-shrink-0" />
                                                     <span>Admin</span>
