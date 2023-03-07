@@ -1,6 +1,6 @@
 import ApplicationLogo from '@/Components/Common/ApplicationLogo';
 import { Dialog, Transition } from '@headlessui/react';
-import { BanknotesIcon, HomeIcon, UsersIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { BanknotesIcon, HomeIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import {
     ArrowDownTrayIcon,
     ArrowUpTrayIcon,
@@ -26,7 +26,12 @@ export default function Sidebar({ showSidebar, setShowSidebar }) {
     const subnavigation = [
         { name: 'Active Miners', href: route('user.miners.index'), icon: ServerStackIcon, current: route().current('user.miners.index') },
         { name: 'Orders', href: route('user.orders.index'), icon: ShoppingBagIcon, current: route().current('user.orders.index') },
-        { name: 'Withdrawal Accounts', href: route('user.withdrawals.accounts.index'), icon: BanknotesIcon, current: route().current('user.withdrawals.accounts.index') },
+        {
+            name: 'Withdrawal Accounts',
+            href: route('user.withdrawals.accounts.index'),
+            icon: BanknotesIcon,
+            current: route().current('user.withdrawals.accounts.index'),
+        },
         { name: 'Wallet', href: route('user.wallet.index'), icon: CreditCardIcon, current: route().current('user.wallet.index') },
         { name: 'Withdrawals', href: route('user.withdrawals.index'), icon: ArrowUpTrayIcon, current: route().current('user.withdrawals.index') },
         { name: 'Deposits', href: route('user.deposits.index'), icon: ArrowDownTrayIcon, current: route().current('user.deposits.index') },
@@ -194,7 +199,16 @@ export default function Sidebar({ showSidebar, setShowSidebar }) {
                             {usePage().props.settings.telegram_url && (
                                 <div className="mt-10 border-t border-neutral-400 dark:border-neutral-500">
                                     <div className="mt-5 space-y-1">
-                                        <SidebarSublink href={usePage().props.settings.telegram_url} current={false}>
+                                        <a
+                                            href={usePage().props.settings.telegram_url}
+                                            className={clsx(
+                                                false
+                                                    ? 'bg-neutral-600 text-white'
+                                                    : 'text-neutral-700 hover:bg-neutral-600 hover:text-white dark:text-neutral-300',
+                                                'group flex items-center rounded-md px-2 py-2 text-base font-medium',
+                                            )}
+                                            aria-current={false ? 'page' : undefined}
+                                        >
                                             <QuestionMarkCircleIcon
                                                 className={clsx(
                                                     false ? 'text-slate-300' : 'text-slate-400 group-hover:text-slate-300',
@@ -203,7 +217,7 @@ export default function Sidebar({ showSidebar, setShowSidebar }) {
                                                 aria-hidden="true"
                                             />
                                             Customer Support
-                                        </SidebarSublink>
+                                        </a>
                                     </div>
                                 </div>
                             )}
