@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\SystemSetting;
+use App\Actions\Settings\CreateNewSetting;
 use Illuminate\Console\Command;
 
 class SettingStoreCommand extends Command
@@ -26,6 +26,6 @@ class SettingStoreCommand extends Command
      */
     public function handle(): void
     {
-        SystemSetting::create(['key' => $this->argument('key')]);
+        (new CreateNewSetting)->handle(['key' => $this->argument('key')]);
     }
 }
