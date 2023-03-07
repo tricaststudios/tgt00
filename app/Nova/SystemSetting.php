@@ -48,9 +48,7 @@ class SystemSetting extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            Text::make('Key')->withMeta(['extraAttributes' => [
-                'readonly' => true
-            ]]),
+            Text::make('Key')->withMeta(['extraAttributes' => ['readonly' => true]]),
             Text::make('Value'),
         ];
     }

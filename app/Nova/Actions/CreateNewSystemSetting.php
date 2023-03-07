@@ -9,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class CreateNewSystemSetting extends Action
@@ -37,7 +37,7 @@ class CreateNewSystemSetting extends Action
     public function fields(NovaRequest $request)
     {
         return [
-            Text::make('Key')->rules('required', 'string', 'unique:system_settings,key')
+            Number::make('Key')->step('0.01')->rules('required', 'string', 'unique:system_settings,key')
         ];
     }
 }
