@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
-class MarketController extends Controller
+class MarketTickerController extends Controller
 {
     public function __invoke(Market $market, Request $request)
     {
