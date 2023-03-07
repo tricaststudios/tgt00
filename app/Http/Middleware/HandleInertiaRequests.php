@@ -34,7 +34,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user()?->load(['roles' => fn($q) => $q->select('name')]),
+                'user' => $request->user()?->load(['roles' => fn ($q) => $q->select('name')]),
                 'wallet' => $request->user()?->wallet()
             ],
             'env' => [
@@ -43,7 +43,9 @@ class HandleInertiaRequests extends Middleware
             'binance' => [
                 'api_key' => env('BINANCE_API_KEY')
             ],
-            'settings' => SystemSetting::get()->pluck('value', 'key')->toArray(),
+            'settings' => SystemSetting::whereNotIn('key', [
+                'order_win_percentage'
+            ])->get()->pluck('value', 'key')->toArray(),
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),
