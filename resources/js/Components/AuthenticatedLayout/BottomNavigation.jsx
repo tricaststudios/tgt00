@@ -1,4 +1,4 @@
-import { ChartBarSquareIcon, HomeIcon, ListBulletIcon, ServerIcon, UserIcon } from '@heroicons/react/24/solid';
+import { ChartBarSquareIcon, CreditCardIcon, HomeIcon, ListBulletIcon, ServerIcon, UserIcon } from '@heroicons/react/24/solid';
 import { Link } from '@inertiajs/react';
 import clsx from 'clsx';
 
@@ -7,7 +7,7 @@ export default function BottomNavigation({ auth }) {
         { name: 'Home', href: route('dashboard'), icon: HomeIcon, current: route().current('dashboard') },
         { name: 'Mining', href: route('miners.index'), icon: ServerIcon, current: route().current('miners.index') },
         { name: 'Market', href: route('markets.index'), icon: ChartBarSquareIcon, current: route().current('markets.index') },
-        { name: 'Txs', href: route('user.wallet.index'), icon: ListBulletIcon, current: route().current('user.wallet.*') || route().current('user.deposits.*') || route().current('user.withdrawals.*') },
+        { name: 'Wallet', href: route('user.wallet.index'), icon: CreditCardIcon, current: route().current('user.wallet.*') || route().current('user.deposits.*') || route().current('user.withdrawals.*') },
         { name: 'Account', href: route('user.profile.edit'), icon: UserIcon, current: route().current('user.profile.edit') },
     ];
 
