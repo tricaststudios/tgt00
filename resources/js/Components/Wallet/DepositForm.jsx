@@ -1,5 +1,7 @@
+import { CheckCircleIcon, ClipboardDocumentCheckIcon } from '@heroicons/react/24/solid';
 import { useForm } from '@inertiajs/react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import P from '../AuthenticatedLayout/P';
 import ButtonPrimary from '../Common/ButtonPrimary';
 import ButtonSecondary from '../Common/ButtonSecondary';
@@ -14,6 +16,7 @@ export default function DepositForm({ account }) {
     const notificationRef = useRef();
 
     const [showModal, setShowModal] = useState(false);
+    const [copied, setCopied] = useState(false);
 
     const { data, setData, post, processing, errors, reset, transform } = useForm({
         wallet_address: '',
@@ -27,6 +30,18 @@ export default function DepositForm({ account }) {
     const closeModal = () => {
         setShowModal(false);
     };
+
+    useEffect(() => {
+        if (!copied) return;
+
+        const timeout = setTimeout(() => {
+            setCopied(false);
+        }, 3000);
+
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [copied]);
 
     const submit = async e => {
         e.preventDefault();
@@ -64,7 +79,12 @@ export default function DepositForm({ account }) {
                         <div className="mb-18 flex flex-col space-y-5 text-center">
                             <img src={account.media[0].original_url} className="m-auto h-full w-64" alt="" />
                             <P>{account.name}</P>
-                            <P>{account.address}</P>
+                            <CopyToClipboard text={account.address}>
+                                <ButtonSecondary onClick={() => setCopied(true)} className="m-auto flex items-center space-x-3">
+                                    <P>{account.address}</P>
+                                    {copied == true ? <CheckCircleIcon className="h-5 w-5 fill-green-500" /> : <ClipboardDocumentCheckIcon className="h-5 w-5" />}
+                                </ButtonSecondary>
+                            </CopyToClipboard>
                         </div>
                     )}
                     <InputGroup>
