@@ -17,11 +17,11 @@ class CreateNewOrder
             ]));
 
             (new DeductBalance)->handle($user->wallet(), $amount, 'order', [
-                'lang_code' => 'transaction.orders.store',
+                'lang_code' => 'transaction.order.store',
                 'lang_params' => [
                     'amount' => $data['amount'],
                     'buy_amount' => $data['buy_amount'],
-                    'type' => $data['type'],
+                    'type' => $data['type'] == 'high' ? 'up' : 'fall',
                     'interval' => $data['interval'],
                     'win_percentage' => $data['win_percentage'],
                 ]

@@ -17,8 +17,7 @@ return [
         'finished' => 'Mining profit.'
     ],
     'order' => [
-        'store' => 'Activated miner :miner',
-        'win' => '',
-        'lose' => ''
+        'store' => 'Placed market order :type, :interval s',
+        'win' => 'Predicted succesfully!',
     ]
 ];
