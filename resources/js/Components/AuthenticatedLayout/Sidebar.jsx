@@ -127,18 +127,32 @@ export default function Sidebar({ showSidebar, setShowSidebar }) {
                                                 </SidebarSublink>
                                             ))}
                                         </div>
-                                        <div className="mt-5 space-y-1 border-t border-neutral-400 pt-5 dark:border-neutral-500">
-                                            <SidebarSublink href="" current={false}>
-                                                <QuestionMarkCircleIcon
-                                                    className={clsx(
-                                                        false ? 'text-slate-300' : 'text-slate-400 group-hover:text-slate-300',
-                                                        'mr-4 h-6 w-6 flex-shrink-0',
-                                                    )}
-                                                    aria-hidden="true"
-                                                />
-                                                Customer Support
-                                            </SidebarSublink>
-                                        </div>
+                                        {usePage().props.settings.telegram_url && (
+                                            <div className="mt-10 border-t border-neutral-400 dark:border-neutral-500">
+                                                <div className="mt-5 space-y-1">
+                                                    <a
+                                                        href={usePage().props.settings.telegram_url}
+                                                        target="_blank"
+                                                        className={clsx(
+                                                            false
+                                                                ? 'bg-neutral-600 text-white'
+                                                                : 'text-neutral-700 hover:bg-neutral-600 hover:text-white dark:text-neutral-300',
+                                                            'group flex items-center rounded-md px-2 py-2 text-base font-medium',
+                                                        )}
+                                                        aria-current={false ? 'page' : undefined}
+                                                    >
+                                                        <QuestionMarkCircleIcon
+                                                            className={clsx(
+                                                                false ? 'text-slate-300' : 'text-slate-400 group-hover:text-slate-300',
+                                                                'mr-4 h-6 w-6 flex-shrink-0',
+                                                            )}
+                                                            aria-hidden="true"
+                                                        />
+                                                        Customer Support
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        )}
                                     </nav>
                                 </div>
                             </Dialog.Panel>
