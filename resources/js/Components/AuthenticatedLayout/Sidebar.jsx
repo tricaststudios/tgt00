@@ -201,6 +201,7 @@ export default function Sidebar({ showSidebar, setShowSidebar }) {
                                     <div className="mt-5 space-y-1">
                                         <a
                                             href={usePage().props.settings.telegram_url}
+                                            target="_blank"
                                             className={clsx(
                                                 false
                                                     ? 'bg-neutral-600 text-white'
