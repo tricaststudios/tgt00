@@ -34,14 +34,12 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user()?->load(['roles' => fn ($q) => $q->select('name')]),
-                'wallet' => $request->user()?->wallet()
+                'user' => $request->user(),
+                'wallet' => $request->user()?->wallet(),
+                'roles' => $request->user()?->roles?->pluck('name')?->toArray(),
             ],
             'env' => [
                 'api_url' => config('app.url') . '/api'
-            ],
-            'binance' => [
-                'api_key' => env('BINANCE_API_KEY')
             ],
             'settings' => SystemSetting::whereNotIn('key', [
                 'order_win_percentage'
