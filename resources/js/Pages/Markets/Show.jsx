@@ -54,10 +54,7 @@ export default function MarketsShow({ auth, market }) {
     const submit = async e => {
         e.preventDefault();
 
-        await transform(data => ({
-            ...data,
-            buy_amount: datas[0].value,
-        }));
+        await transform(data => ({ ...data, buy_amount: datas[0].value }));
 
         await post(route('user.orders.store'), {
             onSuccess: async () => {
@@ -97,10 +94,7 @@ export default function MarketsShow({ auth, market }) {
             { name: 'Low', value: data.y[2] },
         ]);
 
-        setData(prev => ({
-            ...prev,
-            buy_amount: data.y[1],
-        }));
+        setData(prev => ({ ...prev, buy_amount: data.y[4], }));
     }
 
     useEffect(() => {

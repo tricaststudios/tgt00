@@ -1,6 +1,7 @@
 import P from '@/Components/AuthenticatedLayout/P';
 import Section from '@/Components/AuthenticatedLayout/Section';
 import Alert from '@/Components/Common/Alert';
+import Badge from '@/Components/Common/Badge';
 import Table from '@/Components/Table/Table';
 import Layout from '@/Layouts/AuthenticatedLayout';
 import { formatUSDT } from '@/Lib/wallet';
@@ -66,8 +67,8 @@ export default function Wallet({ auth, collection }) {
                                     </td>
                                     <Table.Data value={data.uuid} />
                                     <Table.Data value={data.market.symbol.toUpperCase() + '/USDT'} />
-                                    <Table.Data value={data.type === 'high' ? 'UP' : 'FALL'} />
-                                    <Table.Data value={data.status} />
+                                    <Table.Data value={<Badge type={data.type === 'high' ? 'success' : 'danger'} value={data.type === 'high' ? 'UP' : 'FALL'} />}/>
+                                    <Table.Data value={<Badge type={data.status === 'win' ? 'success' : 'danger'} value={data.status} />} />
                                     <Table.Data value={formatUSDT(data.amount) + ' USDT'} />
                                     <Table.Data value={`${data.interval}s / ${data.win_percentage}%`} />
                                     {/* <Table.Data value={dayjs(data.created_at).format('MMM D, YYYY h:mm A')} /> */}
