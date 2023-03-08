@@ -50,11 +50,21 @@ export default function Wallet({ auth, collection }) {
                                                 <span className="font-black">Market</span>: {formatUSDT(data.amount) + ' USDT'}
                                             </P>
                                             <P className="text-xs">
-                                                <span className="font-black">Type</span>: {data.type === 'high' ? 'UP' : 'FALL'}
+                                                <span className="font-black">Type</span>: <Badge type={data.type === 'high' ? 'success' : 'danger'} value={data.type === 'high' ? 'Up' : 'Fall'} />
                                             </P>
                                         </div>
-                                        <div className="flex">
-                                            <span className="font-bold">Buy Amount</span> : {formatUSDT(data.buy_amount * 1000000) + ' USDT'}
+                                        <div className="flex justify-between">
+                                            <P>
+                                                <span className="font-bold">Buy Amount</span> : {formatUSDT(data.buy_amount * 1000000) + ' USDT'}
+                                            </P>
+                                            <P className="text-xs">
+                                                <span className="font-black">Status</span>:{' '}
+                                                <>
+                                                    {data.status === 'pending' && <Badge type="warning" value={data.status} />}
+                                                    {data.status === 'win' && <Badge type="success" value={data.status} />}
+                                                    {data.status === 'lose' && <Badge type="danger" value={data.status} />}
+                                                </>
+                                            </P>
                                         </div>
                                         <div className="flex">
                                             <span className="font-bold">Buy Amount</span> : {formatUSDT(data.sell_amount * 1000000) + ' USDT'}
