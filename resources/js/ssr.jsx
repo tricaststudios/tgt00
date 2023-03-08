@@ -4,7 +4,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import ReactDOMServer from 'react-dom/server';
 import route from '../../vendor/tightenco/ziggy/dist/index.m';
 
-const appName = 'Lyra';
+const appName = 'TGT';
 
 createServer(page =>
     createInertiaApp({
