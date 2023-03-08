@@ -38,12 +38,12 @@ export default function Deposits({ auth, collection, account, verified }) {
                     title="Notice!."
                     message={
                         <>
-                            <p className="text-blue-500">
+                            <span className="text-blue-500">
                                 Your account needs to be verified first. to perform deposit.{' '}
                                 <Link className="underline" href={route('user.profile.edit')}>
                                     please click here to verify.
                                 </Link>
-                            </p>
+                            </span>
                         </>
                     }
                 />

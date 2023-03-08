@@ -40,12 +40,12 @@ export default function Withdrawals({ auth, accounts, collection, hasPin }) {
                     title="Notice!."
                     message={
                         <>
-                            <p className="text-blue-500">
+                            <span className="text-blue-500">
                                 Your account needs to withdrawal pin.{' '}
                                 <Link className="underline" href={route('user.security.edit')}>
                                     please click here to create new pin.
                                 </Link>
-                            </p>
+                            </span>
                         </>
                     }
                 />
