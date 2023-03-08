@@ -34,7 +34,7 @@ const types = {
     },
 };
 
-export default function Alert({ type = 'info', title, message = null, icon = null, children }) {
+export default function Alert({ type = 'info', title = null, message = null, icon = null, children }) {
     if (isNull(icon)) {
         icon = React.createElement(types[type].defaultIcon);
     }
@@ -44,7 +44,7 @@ export default function Alert({ type = 'info', title, message = null, icon = nul
         'aria-hidden': true,
     });
 
-    return (
+    return title ? (
         <div className={clsx('rounded-md p-4', types[type].bg)}>
             <div className="flex">
                 <div className="flex-shrink-0">{icon}</div>
@@ -60,5 +60,22 @@ export default function Alert({ type = 'info', title, message = null, icon = nul
                 </div>
             </div>
         </div>
+    ) : (
+        <>
+            <div className={clsx('rounded-md p-4', types[type].bg)}>
+                <div className="flex items-center">
+                    <div className="flex-shrink-0">{icon}</div>
+                    <div className="ml-3">
+                        {isNull(message) ? (
+                            <p className={types[type].title}>{message ?? children}</p>
+                        ) : (
+                            <div className="text-sm">
+                                <p className={types[type].title}>{message ?? children}</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </>
     );
 }
