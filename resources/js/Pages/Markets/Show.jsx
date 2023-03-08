@@ -113,7 +113,7 @@ export default function MarketsShow({ auth, market }) {
                 getKlines(url, market.symbol, selectedInterval).then(async data => {
                     fetchData(data);
                 });
-            }, 2000);
+            }, 1000);
 
             return () => {
                 clearTimeout(timer);
@@ -145,11 +145,7 @@ export default function MarketsShow({ auth, market }) {
             </div>
 
             <RadioGroup name="selected-interval" value={selectedInterval} onChange={setSelectedInterval}>
-                <RadioGroup.Label className="text-base font-medium text-neutral-900">
-                    <P>Select Interval</P>
-                </RadioGroup.Label>
-
-                <div className="mt-4 grid grid-cols-4 gap-y-6 gap-x-4">
+                <div className="mt-4 grid grid-cols-4 gap-y- gap-x-4">
                     {intervals.map((item, index) => (
                         <RadioGroup.Option
                             key={item.value}
