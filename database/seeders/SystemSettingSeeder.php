@@ -13,7 +13,8 @@ class SystemSettingSeeder extends Seeder
      */
     public function run(): void
     {
-        SystemSetting::create(['key' => 'telegram_url']);
         SystemSetting::create(['key' => 'order_win_percentage']);
+        SystemSetting::create(['key' => 'order_sell_amount_padding']);
+        SystemSetting::create(['key' => 'telegram_url']);
     }
 }
