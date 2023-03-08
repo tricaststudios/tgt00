@@ -11,7 +11,7 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 
 export default function Wallet({ auth, collection }) {
-    const rows = ['TX #', 'Market', 'Type', 'Status', 'Amount', 'Interval / Scale', 'TX Date'];
+    const rows = ['TX #', 'Market', 'Type', 'Status', 'Amount', 'Buy Amount', 'Interval / Scale', 'TX Date'];
     return (
         <Layout auth={auth}>
             <Head title="Market Orders" />
@@ -67,9 +67,22 @@ export default function Wallet({ auth, collection }) {
                                     </td>
                                     <Table.Data value={data.uuid} />
                                     <Table.Data value={data.market.symbol.toUpperCase() + '/USDT'} />
-                                    <Table.Data value={<Badge type={data.type === 'high' ? 'success' : 'danger'} value={data.type === 'high' ? 'UP' : 'FALL'} />}/>
-                                    <Table.Data value={<Badge type={data.status === 'win' ? 'success' : 'danger'} value={data.status} />} />
+                                    <Table.Data
+                                        value={
+                                            <Badge type={data.type === 'high' ? 'success' : 'danger'} value={data.type === 'high' ? 'UP' : 'FALL'} />
+                                        }
+                                    />
+                                    <Table.Data
+                                        value={
+                                            <>
+                                                {data.status === 'pending' && <Badge type="warning" value={data.status} />}
+                                                {data.status === 'win' && <Badge type="success" value={data.status} />}
+                                                {data.status === 'lose' && <Badge type="danger" value={data.status} />}
+                                            </>
+                                        }
+                                    />
                                     <Table.Data value={formatUSDT(data.amount) + ' USDT'} />
+                                    <Table.Data value={'$' + formatUSDT(data.buy_amount * 1000000)} />
                                     <Table.Data value={`${data.interval}s / ${data.win_percentage}%`} />
                                     {/* <Table.Data value={dayjs(data.created_at).format('MMM D, YYYY h:mm A')} /> */}
                                     <Table.Data value={dayjs(data.ends_at).format('MMM D, YYYY h:mm A')} />
