@@ -92,9 +92,9 @@ export default function MarketsShow({ auth, market }) {
         const data = datas[0].data[datas[0]?.data?.length - 1];
 
         await setDatas([
-            { name: 'Current Price', value: data.y[1] },
-            { name: 'Low', value: data.y[3] },
-            { name: 'High', value: data.y[2] },
+            { name: 'Current Price', value: data.y[3] },
+            { name: 'High', value: data.y[1] },
+            { name: 'Low', value: data.y[2] },
         ]);
 
         setData(prev => ({
@@ -113,7 +113,7 @@ export default function MarketsShow({ auth, market }) {
                 getKlines(url, market.symbol, selectedInterval).then(async data => {
                     fetchData(data);
                 });
-            }, 5000);
+            }, 2000);
 
             return () => {
                 clearTimeout(timer);
