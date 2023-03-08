@@ -32,6 +32,7 @@ Route::get('/', fn () => redirect()->route('dashboard'));
 Route::get('/dashboard', fn () => Inertia::render('User/Dashboard'))->name('dashboard');
 
 Route::get('markets', [MarketController::class, 'index'])->name('markets.index');
+Route::get('terms', fn () => inertia()->render('Terms'))->name('terms');
 
 Route::middleware('auth')->group(function () {
     Route::get('markets/{market}', [MarketController::class, 'show'])->name('markets.show');

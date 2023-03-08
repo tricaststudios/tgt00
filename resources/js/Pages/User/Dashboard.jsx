@@ -1,7 +1,8 @@
 import P from '@/Components/AuthenticatedLayout/P';
 import Section from '@/Components/AuthenticatedLayout/Section';
+import Alert from '@/Components/Common/Alert';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 const posts = [
     { title: 'Boost your conversion rate', href: 'https://cointelegraph.com/tags/bitcoin', imageUrl: '/images/dashboard/crypto.jpg' },
@@ -17,7 +18,16 @@ export default function Dashboard({ auth }) {
     return (
         <AuthenticatedLayout auth={auth}>
             <Head title="Dashboard" />
-            <div className="mx-auto grid max-w-2xl grid-cols-1 gap-y-5 gap-x-8 lg:mx-0 lg:max-w-none md:grid-cols-2 xl:grid-cols-3">
+
+            <Alert
+                type="info"
+                message={
+                    <a className="underline" target='_blank' href={route('terms')}>
+                        Notice!: Please click here to see the terms and conditions.
+                    </a>
+                }
+            />
+            <div className="mx-auto grid max-w-2xl grid-cols-1 gap-y-5 gap-x-8 md:grid-cols-2 lg:mx-0 lg:max-w-none xl:grid-cols-3">
                 {posts.map((item, index) => (
                     <Section key={index}>
                         <a href={item.href} target="_blank">
