@@ -20,8 +20,6 @@ export async function getPriceTicker(url, symbol) {
 }
 
 export async function getKlines(url, symbol, interval = '1m', limit = 50) {
-    url = 'http://tgt00.vip/api'
-
     const response = await axios.get(`${url}/markets/${symbol}?interval=${interval}&limit=${limit}`);
 
     const formattedData = await response.data.map((data, key) => {
