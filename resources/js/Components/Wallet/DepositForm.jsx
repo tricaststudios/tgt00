@@ -79,9 +79,10 @@ export default function DepositForm({ account }) {
                         <div className="mb-18 flex flex-col space-y-5 text-center">
                             <img src={account.media[0].original_url} className="m-auto h-full w-64" alt="" />
                             <P>{account.name}</P>
+                            <P className="text-sm">{account.address}</P>
                             <CopyToClipboard text={account.address}>
                                 <ButtonSecondary onClick={() => setCopied(true)} className="m-auto flex items-center space-x-3">
-                                    <P>{account.address}</P>
+                                    <P>Copy to Clipboard</P>
                                     {copied == true ? (
                                         <CheckCircleIcon className="h-5 w-5 fill-green-500" />
                                     ) : (
