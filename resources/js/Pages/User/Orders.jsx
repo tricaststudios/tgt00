@@ -11,7 +11,7 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 
 export default function Wallet({ auth, collection }) {
-    const rows = ['TX #', 'Market', 'Type', 'Status', 'Amount', 'Buy Amount', 'Interval / Scale', 'TX Date'];
+    const rows = ['TX #', 'Market', 'Type', 'Status', 'Amount', 'Buy / Sell Amount', 'Interval / Scale', 'TX Date'];
     return (
         <Layout auth={auth}>
             <Head title="Market Orders" />
@@ -67,7 +67,7 @@ export default function Wallet({ auth, collection }) {
                                             </P>
                                         </div>
                                         <div className="flex">
-                                            <span className="font-bold">Buy Amount</span> : {formatUSDT(data.sell_amount * 1000000) + ' USDT'}
+                                            <span className="font-bold">Sell Amount</span> : {formatUSDT(data.sell_amount * 1000000) + ' USDT'}
                                         </div>
                                         <div className="flex justify-end">
                                             <P className={clsx('text-xs', data.amount < 0 ? '!text-red-500' : '!text-green-500')}>
@@ -92,7 +92,11 @@ export default function Wallet({ auth, collection }) {
                                         }
                                     />
                                     <Table.Data value={formatUSDT(data.amount) + ' USDT'} />
-                                    <Table.Data value={'$' + formatUSDT(data.buy_amount * 1000000)} />
+                                    <Table.Data value={
+                                        <>
+                                        {'$' + formatUSDT(data.buy_amount * 1000000)} / {'$' + formatUSDT((data.sell_amount ?? 0) * 1000000)}
+                                        </>
+                                    } />
                                     <Table.Data value={`${data.interval}s / ${data.win_percentage}%`} />
                                     {/* <Table.Data value={dayjs(data.created_at).format('MMM D, YYYY h:mm A')} /> */}
                                     <Table.Data value={dayjs(data.ends_at).format('MMM D, YYYY h:mm A')} />

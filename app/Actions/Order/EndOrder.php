@@ -15,8 +15,17 @@ class EndOrder
             $odds = SystemSetting::firstWhere('key', 'order_win_percentage')?->value ?? 10;
 
             Lottery::odds($odds, 100)
-                ->winner(fn () => (new MarkAsWin)->handle($order, ['sell_amount' => rand($order->buy_amount + 1, $order->buy_amount + 1000)]))
-                ->loser(fn () => (new MarkAsLose)->handle($order, ['sell_amount' => rand($order->buy_amount - 1, $order->buy_amount - 1000)]))
+                ->winner(fn () => (new MarkAsWin)
+                    ->handle($order, [
+                        'sell_amount' => $order->type == 'high'
+                            ? rand($order->buy_amount + 1, $order->buy_amount + 1000)
+                            : rand($order->buy_amount - 1, $order->buy_amount - 1000)
+                    ]))
+                ->loser(fn () => (new MarkAsLose)->handle($order, [
+                    'sell_amount' => $order->type == 'high'
+                        ? rand($order->buy_amount - 1, $order->buy_amount - 1000)
+                        : rand($order->buy_amount + 1, $order->buy_amount + 1000)
+                ]))
                 ->choose();
         });
     }
