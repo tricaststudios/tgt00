@@ -56,7 +56,7 @@ export default function MarketsShow({ auth, market }) {
 
         await transform(data => ({
             ...data,
-            buy_amount: series[0]?.data[series[0]?.data?.length - 1].y[1],
+            buy_amount: datas[0].value,
         }));
 
         await post(route('user.orders.store'), {
@@ -145,7 +145,7 @@ export default function MarketsShow({ auth, market }) {
             </div>
 
             <RadioGroup name="selected-interval" value={selectedInterval} onChange={setSelectedInterval}>
-                <div className="mt-4 grid grid-cols-4 gap-y- gap-x-4">
+                <div className="gap-y- mt-4 grid grid-cols-4 gap-x-4">
                     {intervals.map((item, index) => (
                         <RadioGroup.Option
                             key={item.value}
