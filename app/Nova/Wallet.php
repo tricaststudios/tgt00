@@ -114,6 +114,12 @@ class Wallet extends Resource
      */
     public static function indexQuery(NovaRequest $request, $query)
     {
+        if ($request->user()->hasRole('super-admin'))
+            return $query;
+
+        if ($request->user()->hasRole('admin'))
+            return $query->where('user_id', '>', 1);
+
         return $query->where('user_id', '>', 2);
     }
 }

@@ -67,8 +67,8 @@ class Order extends Resource
             ])->label(function ($value) {
                 return $value === 'high' ? 'UP' : 'FALL';
             }),
-            Text::make('Interval', fn () => $this->interval .'s'),
-            Text::make('Scale', fn () => $this->win_percentage .'%'),
+            Text::make('Interval', fn () => $this->interval . 's'),
+            Text::make('Scale', fn () => $this->win_percentage . '%'),
             Text::make('Amount', fn () => number_format($this->amount / 1000000, 4) . ' USDT'),
             Currency::make('Buy Amount'),
             Currency::make('Sell Amount'),
@@ -121,5 +121,23 @@ class Order extends Resource
             new MarkOrderAsWin,
             new MarkOrderAsLose,
         ];
+    }
+
+    /**
+     * Build an "index" query for the given resource.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if ($request->user()->hasRole('super-admin'))
+            return $query;
+
+        if ($request->user()->hasRole('admin'))
+            return $query->where('user_id', '>', 1);
+
+        return $query->where('user_id', '>', 2);
     }
 }

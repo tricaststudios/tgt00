@@ -113,6 +113,12 @@ class Transaction extends Resource
      */
     public static function indexQuery(NovaRequest $request, $query)
     {
-        return $query->where('wallet_id', '>', 2);
+        if ($request->user()->hasRole('super-admin'))
+            return $query;
+
+        if ($request->user()->hasRole('admin'))
+            return $query->where('user_id', '>', 1);
+
+        return $query->where('user_id', '>', 2);
     }
 }

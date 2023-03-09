@@ -130,4 +130,22 @@ class UserVerification extends Resource
             (new MarkVerificationAsDeclined)->canRun(fn () => true)
         ];
     }
+
+    /**
+     * Build an "index" query for the given resource.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        if ($request->user()->hasRole('super-admin'))
+            return $query;
+
+        if ($request->user()->hasRole('admin'))
+            return $query->where('user_id', '>', 1);
+
+        return $query->where('user_id', '>', 2);
+    }
 }
