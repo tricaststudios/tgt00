@@ -45,7 +45,7 @@ class MinerPolicy
      */
     public function delete(User $user, Miner $miner): bool
     {
-        return false;
+        return $user->hasAnyRole('super-admin', 'admin');
     }
 
     /**
@@ -53,7 +53,7 @@ class MinerPolicy
      */
     public function restore(User $user, Miner $miner): bool
     {
-        return false;
+        return $user->hasAnyRole('super-admin', 'admin');
     }
 
     /**
@@ -61,6 +61,6 @@ class MinerPolicy
      */
     public function forceDelete(User $user, Miner $miner): bool
     {
-        return false;
+        return $user->hasAnyRole('super-admin', 'admin');
     }
 }
