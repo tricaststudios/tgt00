@@ -7,6 +7,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BooleanGroup;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\KeyValue;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -55,6 +56,8 @@ class Market extends Resource
             Text::make('Symbol'),
             Text::make('Key'),
             Boolean::make('Is Active'),
+            Number::make('Min Amount')->rules('required', 'numeric'),
+            Number::make('Max Amount')->rules('required', 'numeric'),
             KeyValue::make('Settings', 'metadata')
                 ->rules('json')
                 ->disableEditingKeys()
