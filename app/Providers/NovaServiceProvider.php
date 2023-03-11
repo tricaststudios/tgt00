@@ -26,9 +26,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function routes()
     {
         Nova::routes()
-                ->withAuthenticationRoutes()
-                ->withPasswordResetRoutes()
-                ->register();
+            ->withAuthenticationRoutes()
+            ->withPasswordResetRoutes()
+            ->register();
     }
 
     /**
@@ -64,7 +64,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function tools()
     {
-        return [];
+        return [
+            (new \Spatie\BackupTool\BackupTool())
+                ->canSee(fn ($request) => $request->user()->hasRole('super-admin')),
+        ];
     }
 
     /**
