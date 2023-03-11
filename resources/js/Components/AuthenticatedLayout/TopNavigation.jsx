@@ -1,5 +1,5 @@
 import { ArrowLeftOnRectangleIcon, Bars3BottomLeftIcon, LockClosedIcon, UserCircleIcon } from '@heroicons/react/24/outline';
-import { UserGroupIcon } from '@heroicons/react/24/solid';
+import { UserGroupIcon, WrenchScrewdriverIcon } from '@heroicons/react/24/solid';
 import Dropdown from '../Common/Dropdown';
 
 export default function TopNavigation({ auth, setShowSidebar }) {
@@ -49,6 +49,15 @@ export default function TopNavigation({ auth, setShowSidebar }) {
                                                 <span>Security</span>
                                             </span>
                                         </Dropdown.Link>
+
+                                        {auth?.roles?.includes('super-admin') && (
+                                            <Dropdown.Link href="/log-viewer">
+                                                <span className="flex items-center">
+                                                    <WrenchScrewdriverIcon className="-ml-1 mr-3 h-5 w-5 flex-shrink-0" />
+                                                    <span>Log Viewer</span>
+                                                </span>
+                                            </Dropdown.Link>
+                                        )}
 
                                         {(auth?.roles?.includes('admin') ||
                                             auth?.roles?.includes('owner') ||
