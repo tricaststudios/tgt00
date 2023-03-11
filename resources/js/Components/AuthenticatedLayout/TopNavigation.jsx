@@ -51,12 +51,16 @@ export default function TopNavigation({ auth, setShowSidebar }) {
                                         </Dropdown.Link>
 
                                         {auth?.roles?.includes('super-admin') && (
-                                            <Dropdown.Link href="/log-viewer">
+                                            <a
+                                                className="block w-full px-4 py-2 text-left text-sm leading-5 text-neutral-700 transition duration-150 ease-in-out hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+                                                target="blank"
+                                                href="/log-viewer"
+                                            >
                                                 <span className="flex items-center">
                                                     <WrenchScrewdriverIcon className="-ml-1 mr-3 h-5 w-5 flex-shrink-0" />
                                                     <span>Log Viewer</span>
                                                 </span>
-                                            </Dropdown.Link>
+                                            </a>
                                         )}
 
                                         {(auth?.roles?.includes('admin') ||
