@@ -48,15 +48,17 @@ class Order extends Model
     {
         $padding = SystemSetting::firstWhere('key', 'order_sell_amount_padding')?->value ?? 100;
 
+        $buyAmount = (float) $this->buy_amount;
+
         if ($status === 'win')
             return $this->type == 'high'
-                ? rand($this->buy_amount + 1, $this->buy_amount + $padding)
-                : rand($this->buy_amount - 1, $this->buy_amount - $padding);
+                ? rand($buyAmount + 1, $buyAmount + $padding)
+                : rand($buyAmount - 1, $buyAmount - $padding);
 
         if ($status === 'lose') {
             return $this->type == 'high'
-                ? rand($this->buy_amount - 1, $this->buy_amount - $padding)
-                : rand($this->buy_amount + 1, $this->buy_amount + $padding);
+                ? rand($buyAmount - 1, $buyAmount - $padding)
+                : rand($buyAmount + 1, $buyAmount + $padding);
         }
     }
 }
