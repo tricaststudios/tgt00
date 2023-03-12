@@ -64,8 +64,8 @@ class Officers extends Lens
                 ->updateRules('unique:users,username,{{resourceId}}'),
 
             Panel::make('Tracking', [
-                Text::make('Ip Address', fn () => Session::latest('last_activity')->firstWhere('user_id', $this->id)?->ip_address),
-                Text::make('Device', fn () => Session::latest('last_activity')->firstWhere('user_id', $this->id)?->user_agent)->hideFromIndex(),
+                Text::make('Ip Address', fn () => Session::latest('last_activity')->where('user_id', $this->id)->first()?->ip_address),
+                Text::make('Device', fn () => Session::latest('last_activity')->where('user_id', $this->id)->first()?->user_agent)->hideFromIndex(),
             ]),
         ];
     }
