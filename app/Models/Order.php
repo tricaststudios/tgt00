@@ -44,7 +44,7 @@ class Order extends Model
         return $this->belongsTo(Market::class);
     }
 
-    public function getRandomSellAmount(string $status): int
+    public function getRandomSellAmount(string $status)
     {
         $padding = SystemSetting::firstWhere('key', 'order_sell_amount_padding')?->value ?? 100;
 
