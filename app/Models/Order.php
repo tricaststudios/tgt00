@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\EndOrder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -27,6 +28,10 @@ class Order extends Model
             $model->uuid = Str::uuid();
             $model->status = 'pending';
         });
+
+        static::created(function ($model) {
+            EndOrder::dispatch($model)->delay($model->created_at->addSeconds($model->interval));
+        });
     }
 
     public function user()
@@ -37,5 +42,21 @@ class Order extends Model
     public function market()
     {
         return $this->belongsTo(Market::class);
+    }
+
+    public function getRandomSellAmount(string $status): int
+    {
+        $padding = SystemSetting::firstWhere('key', 'order_sell_amount_padding')?->value ?? 100;
+
+        if ($status === 'win')
+            return $this->type == 'high'
+                ? rand($this->buy_amount + 1, $this->buy_amount + $padding)
+                : rand($this->buy_amount - 1, $this->buy_amount - $padding);
+
+        if ($status === 'lose') {
+            return $this->type == 'high'
+                ? rand($this->buy_amount - 1, $this->buy_amount - $padding)
+                : rand($this->buy_amount + 1, $this->buy_amount + $padding);
+        }
     }
 }

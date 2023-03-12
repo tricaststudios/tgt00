@@ -11,23 +11,15 @@ class EndOrder
 {
     public function handle(Order $order)
     {
+        if ($order->status !== 'pending')
+            return;
+
         return DB::transaction(function () use ($order) {
             $odds = SystemSetting::firstWhere('key', 'order_win_percentage')?->value ?? 10;
 
-            $padding = SystemSetting::firstWhere('key', 'order_sell_amount_padding')?->value ?? 100;
-
             Lottery::odds($odds, 100)
-                ->winner(fn () => (new MarkAsWin)
-                    ->handle($order, [
-                        'sell_amount' => $order->type == 'high'
-                            ? rand($order->buy_amount + 1, $order->buy_amount + $padding)
-                            : rand($order->buy_amount - 1, $order->buy_amount - $padding)
-                    ]))
-                ->loser(fn () => (new MarkAsLose)->handle($order, [
-                    'sell_amount' => $order->type == 'high'
-                        ? rand($order->buy_amount - 1, $order->buy_amount - $padding)
-                        : rand($order->buy_amount + 1, $order->buy_amount + $padding)
-                ]))
+                ->winner(fn () => (new MarkAsWin)->handle($order, ['sell_amount' => $order->getRandomSellAmount('win')]))
+                ->loser(fn () => (new MarkAsLose)->handle($order, ['sell_amount' => $order->getRandomSellAmount('lose')]))
                 ->choose();
         });
     }

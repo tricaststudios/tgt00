@@ -35,7 +35,7 @@ class Order extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'uuid';
 
     /**
      * The columns that should be searched.
@@ -43,7 +43,7 @@ class Order extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'uuid',
     ];
 
     /**
@@ -118,8 +118,8 @@ class Order extends Resource
     public function actions(NovaRequest $request)
     {
         return [
-            new MarkOrderAsWin,
-            new MarkOrderAsLose,
+            (new MarkOrderAsWin)->canRun(fn() => true),
+            (new MarkOrderAsLose)->canRun(fn() => true),
         ];
     }
 

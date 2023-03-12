@@ -28,9 +28,11 @@ class MarkOrderAsLose extends DestructiveAction
     {
         $action = new MarkOrderAsLoseAction;
 
-        DB::transaction(fn () => $models->reject(fn ($model) => $model->status !== 'pending')->each(fn ($model) => $action->handle($model, [
-            'sell_amount' => $fields->sell_amount
-        ])));
+        DB::transaction(
+            fn () => $models
+                ->reject(fn ($model) => $model->status !== 'pending')
+                ->each(fn ($model) => $action->handle($model))
+        );
     }
 
     /**
@@ -41,9 +43,6 @@ class MarkOrderAsLose extends DestructiveAction
      */
     public function fields(NovaRequest $request)
     {
-        return [
-            Number::make('Sell Amount')->rules('required', 'numeric')
-                ->step('0.01'),
-        ];
+        return [];
     }
 }
