@@ -44,21 +44,24 @@ class Order extends Model
         return $this->belongsTo(Market::class);
     }
 
-    public function getRandomSellAmount(string $status)
+    public function getRandomSellAmount(string $status): string
     {
         $padding = SystemSetting::firstWhere('key', 'order_sell_amount_padding')?->value ?? 100;
 
-        $buyAmount = (float) $this->buy_amount;
+        $buyAmount = $this->buy_amount;
+
+        $dataAmount = explode('.', $buyAmount);
+        $prefix = (int)$dataAmount[0];
+        $suffix = $dataAmount[1];
+
+        $newAmount = 0;
 
         if ($status === 'win')
-            return $this->type == 'high'
-                ? rand($buyAmount + 1, $buyAmount + $padding)
-                : rand($buyAmount - 1, $buyAmount - $padding);
+            $newAmount =  $this->type == 'high' ? rand($prefix + 1, $prefix + $padding) : rand($prefix - 1, $prefix - $padding);
 
-        if ($status === 'lose') {
-            return $this->type == 'high'
-                ? rand($buyAmount - 1, $buyAmount - $padding)
-                : rand($buyAmount + 1, $buyAmount + $padding);
-        }
+        if ($status === 'lose')
+            $newAmount =  $this->type == 'high' ? rand($prefix - 1, $prefix - $padding) : rand($prefix + 1, $prefix + $padding);
+
+        return (string)$newAmount . '.' . (string) rand(1000, 9999);
     }
 }

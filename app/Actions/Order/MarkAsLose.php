@@ -10,7 +10,8 @@ class MarkAsLose
     public function handle(Order $order): Order
     {
         return tap($order)->update([
-            'status' => 'lose', 'sell_amount' => $order->getRandomSellAmount('lose')
+            'status' => 'lose',
+            'sell_amount' => $order->getRandomSellAmount('lose')
         ]);
     }
 }

@@ -12,8 +12,6 @@ class MarkAsWin
     public function handle(Order $order): Order
     {
         return DB::transaction(function () use ($order) {
-            $padding = SystemSetting::firstWhere('key', 'order_sell_amount_padding')?->value ?? 100;
-
             $sellAmount = $order->getRandomSellAmount('win');
 
             $order->update(['status' => 'win', 'sell_amount' => $sellAmount]);
