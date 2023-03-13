@@ -57,7 +57,11 @@ export default function Wallet({ auth, collection }) {
                                             </P>
                                         </div>
                                         <div className="flex justify-between">
-                                            <P className="flex items-center !text-xs">{data.description}</P>
+                                            <P className="space-x-3">
+                                                <span>Status:</span>
+                                                {data.status === 'mining' && <Badge type="warning" value={data.status} />}
+                                                {data.status === 'completed' && <Badge type="success" value={data.status} />}
+                                            </P>
                                         </div>
                                         <div className="flex justify-end">
                                             <P className={clsx('text-xs', data.amount < 0 ? '!text-red-500' : '!text-green-500')}>
