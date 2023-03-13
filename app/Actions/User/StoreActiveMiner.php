@@ -22,7 +22,7 @@ class StoreActiveMiner
                 'ends_at' => $endsAt = now()->addDays($miner->lock_days),
             ]);
 
-            EndMining::dispatch($miner)->delay(now()->addSeconds($endsAt));
+            EndMining::dispatch($miner)->delay(now()->addDays($endsAt));
 
             (new DeductBalance)->handle($user->wallet(), $amount, 'mining', [
                 'lang_code' => 'transaction.investment.store',

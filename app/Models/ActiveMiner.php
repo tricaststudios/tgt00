@@ -13,6 +13,7 @@ class ActiveMiner extends Model
     protected $fillable = [
         'miner_id',
         'amount',
+        'status',
         'profit',
         'ends_at'
     ];
@@ -25,6 +26,7 @@ class ActiveMiner extends Model
     {
         static::creating(function ($model) {
             $model->uuid = Str::uuid();
+            $model->status = 'mining';
         });
     }
 

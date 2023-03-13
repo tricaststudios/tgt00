@@ -1,6 +1,7 @@
 import P from '@/Components/AuthenticatedLayout/P';
 import Section from '@/Components/AuthenticatedLayout/Section';
 import Alert from '@/Components/Common/Alert';
+import Badge from '@/Components/Common/Badge';
 import Table from '@/Components/Table/Table';
 import Layout from '@/Layouts/AuthenticatedLayout';
 import { formatUSDT } from '@/Lib/wallet';
@@ -10,7 +11,7 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 
 export default function Wallet({ auth, collection }) {
-    const rows = ['TX #', 'Miner', 'Amount', 'Revenue', 'Starting Date', 'End Date'];
+    const rows = ['TX #', 'Miner', 'status', 'Amount', 'Revenue', 'Starting Date', 'End Date'];
     return (
         <Layout auth={auth}>
             <Head title="Active Miners" />
@@ -71,6 +72,14 @@ export default function Wallet({ auth, collection }) {
                                     </td>
                                     <Table.Data value={data.uuid} />
                                     <Table.Data value={data.miner.name} />
+                                    <Table.Data
+                                        value={
+                                            <>
+                                                {data.status === 'mining' && <Badge type="warning" value={data.status} />}
+                                                {data.status === 'completed' && <Badge type="success" value={data.status} />}
+                                            </>
+                                        }
+                                    />
                                     <Table.Data value={`${formatUSDT(data.amount)} USDT`} />
                                     <Table.Data value={`${formatUSDT(data.profit)} USDT`} />
                                     <Table.Data value={dayjs(data.created_at).format('MMM D, YYYY h:mm A')} />
